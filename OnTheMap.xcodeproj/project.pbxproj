@@ -12,6 +12,8 @@
 		CA8929E72014A7620065D23F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA8929E52014A7620065D23F /* Main.storyboard */; };
 		CA8929E92014A7620065D23F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA8929E82014A7620065D23F /* Assets.xcassets */; };
 		CA8929EC2014A7620065D23F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA8929EA2014A7620065D23F /* LaunchScreen.storyboard */; };
+		CA8929F52014D3790065D23F /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8929F42014D3790065D23F /* Client.swift */; };
+		CA8929F72014D54F0065D23F /* DataParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8929F62014D54F0065D23F /* DataParsing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		CA8929E82014A7620065D23F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA8929EB2014A7620065D23F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA8929ED2014A7620065D23F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA8929F42014D3790065D23F /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
+		CA8929F62014D54F0065D23F /* DataParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParsing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,7 @@
 		CA8929E02014A7620065D23F /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
+				CA8929F32014D3610065D23F /* Client */,
 				CA8929E12014A7620065D23F /* AppDelegate.swift */,
 				CA8929E32014A7620065D23F /* ViewController.swift */,
 				CA8929E52014A7620065D23F /* Main.storyboard */,
@@ -62,6 +67,15 @@
 				CA8929ED2014A7620065D23F /* Info.plist */,
 			);
 			path = OnTheMap;
+			sourceTree = "<group>";
+		};
+		CA8929F32014D3610065D23F /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				CA8929F42014D3790065D23F /* Client.swift */,
+				CA8929F62014D54F0065D23F /* DataParsing.swift */,
+			);
+			path = Client;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +152,8 @@
 			files = (
 				CA8929E42014A7620065D23F /* ViewController.swift in Sources */,
 				CA8929E22014A7620065D23F /* AppDelegate.swift in Sources */,
+				CA8929F72014D54F0065D23F /* DataParsing.swift in Sources */,
+				CA8929F52014D3790065D23F /* Client.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
