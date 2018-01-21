@@ -16,29 +16,41 @@ import Foundation
 
 // This function create a connection with the remote server and fetch the data that are passed to a function, which, in turn, is passed as parameter of the function itself.
 
-func makeConnection(request: URLRequest, jsonHandler: JsonHandlerFunction, completion: @escaping (_ jasonData: [String:Any]) -> Void ) {
+func makeConnection(request: URLRequest, jsonHandler: @escaping JsonHandlerFunction, completion: @escaping (_ jsonData: [String:Any]?, _ error: Error?) -> Void ) {
     
     let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
         
+//        func displayError(_ error: String) {
+//            print(error)
+//            let userInfo = [NSLocalizedDescriptionKey : error]
+//            completion(nil, NSError(domain: "makeConnection", code: 1, userInfo: userInfo))
+//        }
+        
         // error checking
         guard (error == nil) else {
-            print("Error")
-            // provide an alert here
+            displayError((error?.localizedDescription) ?? "Error", "makeConnection", completion: completion)
             return
         }
         // response checking
-        guard let statusCode = (response as? HTTPURLResponse)?.statusCode, checkResponseCode(code: statusCode) == true else {
-            print("Not successfull")
-            // provide an alert here
+        if let statusCode = (response as? HTTPURLResponse)?.statusCode{
+            guard checkResponseCode(code: statusCode) == true else {
+                displayError("Status code: \(String(describing: statusCode))", "makeConnection", completion: completion)
+                return
+            }
+        }else {
+            displayError("Status code unknown", "makeConnection", completion: completion)
             return
         }
         
         // data checking
         guard let data = data else {
-            print("Bad data")
-            // provide an alert here
+            displayError("Error receiving the Data", "makeConnection", completion: completion)
             return
         }
+        
+        // This function is passed as parameter and is tailored on the type
+        // of json I need to parse
+        jsonHandler(data, completion)
         
         })
     task.resume()
