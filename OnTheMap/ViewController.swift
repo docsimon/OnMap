@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         
         let url = buildUrl(baseUrl: Constants.udacityBaseUrl, path: Constants.udacityAuthPath, query: nil)
         
-        let bodyString = "{\"udacity\": {\"username\": \"simone.milano12@gmail.com\", \"password\": \"***REMOVED***\"}}"
+        let bodyString = "{\"udacity\": {\"username\": \"simone.milano12@gmail.com\", \"password\": \"\"}}"
         let body = makeBody(bodyStructure: bodyString)
         
         guard let murl = url else {
