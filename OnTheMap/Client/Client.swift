@@ -20,37 +20,35 @@ func makeConnection(request: URLRequest, jsonHandler: @escaping JsonHandlerFunct
     
     let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
         
-//        func displayError(_ error: String) {
-//            print(error)
-//            let userInfo = [NSLocalizedDescriptionKey : error]
-//            completion(nil, NSError(domain: "makeConnection", code: 1, userInfo: userInfo))
-//        }
-        
         // error checking
         guard (error == nil) else {
-            displayError((error?.localizedDescription) ?? "Error", "makeConnection", completion: completion)
+            sendError((error?.localizedDescription) ?? "Error", "makeConnection", completion: completion)
             return
         }
         // response checking
         if let statusCode = (response as? HTTPURLResponse)?.statusCode{
             guard checkResponseCode(code: statusCode) == true else {
-                displayError("Status code: \(String(describing: statusCode))", "makeConnection", completion: completion)
+                sendError("Status code: \(String(describing: statusCode))", "makeConnection", completion: completion)
                 return
             }
         }else {
-            displayError("Status code unknown", "makeConnection", completion: completion)
+            sendError("Status code unknown", "makeConnection", completion: completion)
             return
         }
         
         // data checking
         guard let data = data else {
-            displayError("Error receiving the Data", "makeConnection", completion: completion)
+            sendError("Error receiving the Data", "makeConnection", completion: completion)
             return
         }
         
+        // security feature needed to correctly parse the json from Udacity
+        let range = Range(5..<data.count)
+        let newData = data.subdata(in: range) /* subset response data! */
+        
         // This function is passed as parameter and is tailored on the type
         // of json I need to parse
-        jsonHandler(data, completion)
+        jsonHandler(newData, completion)
         
         })
     task.resume()
