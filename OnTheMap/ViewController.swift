@@ -12,14 +12,35 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        //request.httpBody = "{\"udacity\": {\"username\": \"account@domain.com\", \"password\": \"********\"}}".data(using: .utf8)
+        
+        let url = buildUrl(baseUrl: Constants.udacityBaseUrl, path: Constants.udacityAuthPath, query: nil)
+        
+        let bodyString = "{\"udacity\": {\"username\": \"simone.milano12@gmail.com\", \"password\": \"***REMOVED***\"}}"
+        let body = makeBody(bodyStructure: bodyString)
+        
+        guard let murl = url else {
+            print("problemz ", url?.absoluteString)
+            return
+        }
+        let request = buildRequest(url: murl, method: "POST", body: body)
+        
+        makeConnection(request: request, jsonHandler: parseAuthJson, completion: {(data, error) in
+            
+            guard (error == nil) else {
+                print(error!.localizedDescription)
+                return
+            }
+            
+            guard let data = data else {
+                print("Empry data")
+                return
+            }
+            
+            print(data["key"] as! String, " ", data["sessionId"] as! String)
+            
+        })
+
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
-

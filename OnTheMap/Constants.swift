@@ -10,9 +10,10 @@ import Foundation
 
 struct Constants {
     
-    static let udacityBaseUrl = "https://www.udacity.com"
-    static let udacityAuthPath = "api/session"
-    static let parseBaseUrl = "https://parse.udacity.com"
+    static let baseScheme = "https"
+    static let udacityBaseUrl = "www.udacity.com"
+    static let udacityAuthPath = "/api/session"
+    static let parseBaseUrl = "parse.udacity.com"
     static let parseGetPath = ""
     static let parsePostPath = ""
 

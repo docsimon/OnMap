@@ -22,9 +22,12 @@ func sendError(_ error: String, _ domain: String, completion: CompletionClosure)
 
 // this function helps to build the URL
 func buildUrl(baseUrl: String, path:String?, query: [String:String]?) -> URL?{
-    var urlComponents = URLComponents(string: baseUrl)
+    var urlComponents = URLComponents()
+    
+    urlComponents.scheme = Constants.baseScheme
+    urlComponents.host = baseUrl
     if let path = path {
-        urlComponents?.path = path
+        urlComponents.path = path
     }
     if let query = query {
         var queries = [URLQueryItem]()
@@ -32,9 +35,9 @@ func buildUrl(baseUrl: String, path:String?, query: [String:String]?) -> URL?{
             let queryItem = URLQueryItem(name: key, value: value)
             queries.append(queryItem)
         }
-        urlComponents?.queryItems = queries
+        urlComponents.queryItems = queries
     }
-    return urlComponents?.url
+    return urlComponents.url
 }
 
 // The following function builds a request based on the Http method type
