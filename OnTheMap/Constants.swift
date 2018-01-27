@@ -27,7 +27,10 @@ struct Constants {
         static let clientTitle = "Connection error"
         static let dataTitle = "Data error"
         static let dataMsg = "Data received are empty or corrupted"
+        static let parsingLoginJson = "Error parsing login response json"
+        static let userStatus = "User not registered"
+        static let userKey = "User key not valid"
+        static let userSession = "User session not valid"
     }
     
-
 }

@@ -22,26 +22,26 @@ func parseAuthJson(data: Data, completion: CompletionClosure){
     do {
         loginResponse = try jsonDecoder.decode(LoginResponse.self, from: data)
     }catch {
-        print("Error parsing login response json")
-        sendError("Error parsing login response json", "parseAuthJson", completion: completion)
+        print(Constants.Errors.parsingLoginJson)
+        sendError(Constants.Errors.parsingLoginJson, "parseAuthJson", completion: completion)
         return
     }
     
     guard let registered = loginResponse?.account.registered, registered == true else{
-        sendError("User not registered", "parseAuthJson", completion: completion)
+        sendError(Constants.Errors.userStatus, "parseAuthJson", completion: completion)
         return
     }
     
     guard let key = loginResponse?.account.key else {
-        sendError("User key not valid", "parseAuthJson", completion: completion)
+        sendError(Constants.Errors.userKey, "parseAuthJson", completion: completion)
         return
     }
    
     guard let session = loginResponse?.session.id else {
-        sendError("User session not valid", "parseAuthJson", completion: completion)
+        sendError(Constants.Errors.userSession, "parseAuthJson", completion: completion)
         return
     }
     
     let authData = ["key": key, "sessionId": session]
-      completion(authData, nil)
+    completion(authData, nil)
 }

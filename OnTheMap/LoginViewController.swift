@@ -67,14 +67,17 @@ class LoginViewController: UIViewController {
             }
             
             guard let data = data else {
-                print("Empry data")
+                print(Constants.Errors.dataTitle)
                 displayError(errorTitle: Constants.Errors.dataTitle, errorMsg: Constants.Errors.dataMsg, presenting: { alert in
                     self.present(alert, animated: true)
                 })
                 return
             }
-            print(data["key"] as! String, " ", data["sessionId"] as! String)
-            
+            if let key = data["key"] as? String, let session = data["sessionId"] as? String {
+                let userLoginData = UserLoginData(userKey:key, userSession: session)
+                print(userLoginData.userKey, " ", userLoginData.userSession)
+            }
+      
         })
     }
 }
