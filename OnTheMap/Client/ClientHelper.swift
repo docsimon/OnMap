@@ -57,9 +57,26 @@ func buildRequest(url: URL, method: String?, body: Data?) -> URLRequest{
 }
 
 // The following function helps to create a body for the POST/PUT requests
-func makeBody(bodyStructure: String) -> Data? {
-    let body = bodyStructure.data(using: String.Encoding.utf8)
-    return body
+func makeBody<T: Codable>(bodyStructure: T) -> Data? {
+    let jsonEncoder = JSONEncoder()
+    let jsonPOSTData: Data?
+    do {
+        jsonPOSTData = try jsonEncoder.encode(bodyStructure)
+    }catch{
+        print("Encoding error")
+        return nil
+    }
+    return jsonPOSTData
+}
+
+func loginDataAreValid(username:String?, password: String?) -> Bool{
+    guard (username?.isEmpty == false), (password?.isEmpty == false) else {
+        return false
+    }
+    
+    // TODO: add other checks on the username and password
+    
+    return true
 }
 
 
