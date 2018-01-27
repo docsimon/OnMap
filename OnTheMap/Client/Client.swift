@@ -47,7 +47,7 @@ func makeConnection(request: URLRequest, jsonHandler: @escaping JsonHandlerFunct
         let newData = data.subdata(in: range) /* subset response data! */
         
         // This function is passed as parameter and is tailored on the type
-        // of json I need to parse
+        // of json I need to send/parse
         jsonHandler(newData, completion)
         
         })

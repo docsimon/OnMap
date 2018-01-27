@@ -19,3 +19,17 @@ struct LoginData: Codable {
     let username: String
     let password: String
 }
+
+// Login response Json from Udacity
+struct LoginResponse: Codable {
+    let account: LoginAccount
+    let session: LoginSession
+}
+struct LoginAccount: Codable {
+    let registered: Bool
+    let key: String
+}
+struct LoginSession: Codable {
+    let id: String
+    let expiration: String
+}
