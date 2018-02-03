@@ -31,6 +31,13 @@ struct Constants {
         static let userStatus = "User not registered"
         static let userKey = "User key not valid"
         static let userSession = "User session not valid"
+        static let loginUnknownErrorTitle = "Unknown Error"
+        static let loginUnknownErrorMsg = "Please try to login again"
+    }
+    
+    struct Apis {
+        static let parseID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
+        static let parseKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
     }
     
 }

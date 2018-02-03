@@ -12,14 +12,16 @@ class LoginViewController: UIViewController {
 
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
-    
+    var userLoginData: UserLoginData? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
     
     @IBAction func loginTapped(_ sender: Any) {
-        login(username.text, password.text)
+        //login(username.text, password.text)
+        self.performSegue(withIdentifier: "Map", sender: nil)
+
     }
     
     func login(_ username: String?, _ password: String?) {
@@ -74,10 +76,29 @@ class LoginViewController: UIViewController {
                 return
             }
             if let key = data["key"] as? String, let session = data["sessionId"] as? String {
-                let userLoginData = UserLoginData(userKey:key, userSession: session)
-                print(userLoginData.userKey, " ", userLoginData.userSession)
+                self.userLoginData = UserLoginData(userKey:key, userSession: session)
+                //print(userLoginData.userKey, " ", userLoginData.userSession)
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "Map", sender: nil)
+                }
+            }else {
+                print(Constants.Errors.dataTitle)
+                displayError(errorTitle: Constants.Errors.loginUnknownErrorTitle, errorMsg: Constants.Errors.loginUnknownErrorMsg, presenting: { alert in
+                    self.present(alert, animated: true)
+                })
+                return
             }
       
         })
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destVC = segue.destination as? MapViewController{
+            destVC.sid = "cippa"
+        }
+    }
+    
+    deinit {
+        print("deallocated")
     }
 }

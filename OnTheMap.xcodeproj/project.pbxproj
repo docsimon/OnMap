@@ -16,9 +16,12 @@
 		CA8929F72014D54F0065D23F /* DataParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8929F62014D54F0065D23F /* DataParsing.swift */; };
 		CA8929F92014F5940065D23F /* ClientHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8929F82014F5940065D23F /* ClientHelper.swift */; };
 		CA8929FB201507BF0065D23F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8929FA201507BF0065D23F /* Constants.swift */; };
+		CA8FEC722025D765008C8749 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8FEC712025D765008C8749 /* ListViewController.swift */; };
+		CA8FEC942025EE6C008C8749 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8FEC932025EE6C008C8749 /* Protocols.swift */; };
 		CABF2A06201C92AF00E3F358 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABF2A05201C92AF00E3F358 /* Errors.swift */; };
 		CABF2A08201C9DCF00E3F358 /* DataParsingStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABF2A07201C9DCF00E3F358 /* DataParsingStructs.swift */; };
 		CABF2A0A201CEDB000E3F358 /* UserLoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABF2A09201CEDB000E3F358 /* UserLoginData.swift */; };
+		CABF2A0C201FA15C00E3F358 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABF2A0B201FA15C00E3F358 /* MapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,9 +36,12 @@
 		CA8929F62014D54F0065D23F /* DataParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParsing.swift; sourceTree = "<group>"; };
 		CA8929F82014F5940065D23F /* ClientHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientHelper.swift; sourceTree = "<group>"; };
 		CA8929FA201507BF0065D23F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CA8FEC712025D765008C8749 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		CA8FEC932025EE6C008C8749 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		CABF2A05201C92AF00E3F358 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		CABF2A07201C9DCF00E3F358 /* DataParsingStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParsingStructs.swift; sourceTree = "<group>"; };
 		CABF2A09201CEDB000E3F358 /* UserLoginData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginData.swift; sourceTree = "<group>"; };
+		CABF2A0B201FA15C00E3F358 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,12 +78,15 @@
 				CA8929E12014A7620065D23F /* AppDelegate.swift */,
 				CA8929E32014A7620065D23F /* LoginViewController.swift */,
 				CA8929E52014A7620065D23F /* Main.storyboard */,
+				CA8FEC712025D765008C8749 /* ListViewController.swift */,
 				CA8929E82014A7620065D23F /* Assets.xcassets */,
 				CA8929EA2014A7620065D23F /* LaunchScreen.storyboard */,
 				CA8929ED2014A7620065D23F /* Info.plist */,
 				CA8929FA201507BF0065D23F /* Constants.swift */,
 				CABF2A05201C92AF00E3F358 /* Errors.swift */,
 				CABF2A09201CEDB000E3F358 /* UserLoginData.swift */,
+				CABF2A0B201FA15C00E3F358 /* MapViewController.swift */,
+				CA8FEC932025EE6C008C8749 /* Protocols.swift */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
@@ -168,7 +177,10 @@
 				CA8929E42014A7620065D23F /* LoginViewController.swift in Sources */,
 				CABF2A08201C9DCF00E3F358 /* DataParsingStructs.swift in Sources */,
 				CABF2A0A201CEDB000E3F358 /* UserLoginData.swift in Sources */,
+				CA8FEC942025EE6C008C8749 /* Protocols.swift in Sources */,
+				CABF2A0C201FA15C00E3F358 /* MapViewController.swift in Sources */,
 				CA8929E22014A7620065D23F /* AppDelegate.swift in Sources */,
+				CA8FEC722025D765008C8749 /* ListViewController.swift in Sources */,
 				CA8929F92014F5940065D23F /* ClientHelper.swift in Sources */,
 				CA8929F72014D54F0065D23F /* DataParsing.swift in Sources */,
 				CA8929F52014D3790065D23F /* Client.swift in Sources */,
