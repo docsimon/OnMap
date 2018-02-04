@@ -8,18 +8,28 @@
 
 import UIKit
 
-class ListViewController: UIViewController, SetupNavigationBarWithButtons
+class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDelegate, UITableViewDataSource
 {
     override func viewDidLoad() {
         super.viewDidLoad()
-       addBarButtons(pinSelector: #selector(pin), refreshSelector: #selector(reload),navigationItem: navigationItem)
+        addBarButtons(vc: self)
     }
     
     @objc func pin(){
-        print("cippa pin")
+        performSegue(withIdentifier: "pinList", sender: nil)
     }
     @objc func reload(){
-        print("cippa refresh")
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel?.text = "Simone"
+        cell.detailTextLabel?.text = "London, UK"
+        return cell
     }
     
     deinit {

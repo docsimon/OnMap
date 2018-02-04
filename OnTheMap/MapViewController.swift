@@ -9,25 +9,22 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, MKMapViewDelegate, SetupNavigationBarWithButtons {
+class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons {
     @IBOutlet weak var mapView: MKMapView!
     var sid = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         displaySession(id: sid)
-        //navigationController?.navigationBar.topItem?.title = "Simone"
-        
-        addBarButtons(pinSelector: #selector(pin), refreshSelector: #selector(reload),navigationItem: navigationItem)
+        addBarButtons(vc: self)
     }
 
     func displaySession(id: String){
     }
     
     @objc func pin(){
-        print("cippa pin")
+        performSegue(withIdentifier: "pinMap", sender: nil)
     }
     @objc func reload(){
-        print("cippa refresh")
     }
     
     deinit {
