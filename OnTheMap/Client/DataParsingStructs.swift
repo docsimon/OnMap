@@ -33,3 +33,24 @@ struct LoginSession: Codable {
     let id: String
     let expiration: String
 }
+
+// Send student location POST body
+
+struct StudentLocation: Codable {
+    let uniqueKey: String
+    let firstName: String
+    let lastName: String
+    let mapString: String
+    let mediaURL: String
+    let latitude: Double
+    let longitude: Double
+}
+
+// Response after posting the user location
+struct StudentLocationResponse: Codable {
+    let createdAt: String
+    let objectId: String
+}
+
+
+

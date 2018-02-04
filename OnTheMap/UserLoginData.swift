@@ -9,6 +9,6 @@
 import Foundation
 
 public struct UserLoginData {
-    let userKey: String
-    let userSession: String
+   let userKey: String
+   let userSession: String
 }

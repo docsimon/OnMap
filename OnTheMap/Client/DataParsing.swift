@@ -45,3 +45,36 @@ func parseAuthJson(data: Data, completion: CompletionClosure){
     let authData = ["key": key, "sessionId": session]
     completion(authData, nil)
 }
+
+// Function to parse the Json fetched after posting the Student location
+func parseStudentLocationJson(data: Data, completion: CompletionClosure){
+    
+    let jsonDecoder = JSONDecoder()
+    let loginResponse: LoginResponse?
+    do {
+        loginResponse = try jsonDecoder.decode(LoginResponse.self, from: data)
+    }catch {
+        print(Constants.Errors.parsingLoginJson)
+        sendError(Constants.Errors.parsingLoginJson, "parseAuthJson", completion: completion)
+        return
+    }
+    
+    guard let registered = loginResponse?.account.registered, registered == true else{
+        sendError(Constants.Errors.userStatus, "parseAuthJson", completion: completion)
+        return
+    }
+    
+    guard let key = loginResponse?.account.key else {
+        sendError(Constants.Errors.userKey, "parseAuthJson", completion: completion)
+        return
+    }
+    
+    guard let session = loginResponse?.session.id else {
+        sendError(Constants.Errors.userSession, "parseAuthJson", completion: completion)
+        return
+    }
+    
+    let authData = ["key": key, "sessionId": session]
+    completion(authData, nil)
+}
+

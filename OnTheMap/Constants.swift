@@ -14,8 +14,8 @@ struct Constants {
     static let udacityBaseUrl = "www.udacity.com"
     static let udacityAuthPath = "/api/session"
     static let parseBaseUrl = "parse.udacity.com"
-    static let parseGetPath = ""
-    static let parsePostPath = ""
+    static let parseGetPath = "/parse/classes/StudentLocation"
+    static let parsePostPath = "/parse/classes/StudentLocation"
     
     struct Errors {
         static let loginTitle = "Login Error"
@@ -33,11 +33,22 @@ struct Constants {
         static let userSession = "User session not valid"
         static let loginUnknownErrorTitle = "Unknown Error"
         static let loginUnknownErrorMsg = "Please try to login again"
+        static let unauthorizedAccess = "Unauthorized Access"
+        static let wrongUserKey = "Wrong or missing userkey"
+        static let invalidLocation = "Location error"
+        static let invalidLocationMsg = "Location can't be found"
+
+        
     }
     
     struct Apis {
         static let parseID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
         static let parseKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
+    }
+    
+    struct UserPersonalData{
+       static let firstName = "Ciccio"
+       static let lastName = "Formaggio"
     }
     
 }
