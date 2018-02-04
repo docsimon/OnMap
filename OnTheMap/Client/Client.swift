@@ -9,14 +9,14 @@
 //
 // The purpose of this file is to contain the functions necessary to create
 // a connection with the remote servers (Udacity for authentication and Parse for retrieving students location data)
- //
+//
 // I'm going to use only functions and Structs instead of Classes
 
 import Foundation
 
 // This function create a connection with the remote server and fetch the data that are passed to a function, which, in turn, is passed as parameter of the function itself.
 
-func makeConnection(request: URLRequest, jsonHandler: @escaping JsonHandlerFunction, completion: @escaping (_ jsonData: [String:Any]?, _ error: Error?) -> Void ) {
+func makeConnection(request: URLRequest,securityCheck: Bool, jsonHandler: @escaping JsonHandlerFunction, completion: @escaping (_ jsonData: [String:Any]?, _ error: Error?) -> Void ) {
     
     let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
         
@@ -42,15 +42,19 @@ func makeConnection(request: URLRequest, jsonHandler: @escaping JsonHandlerFunct
             return
         }
         
-        // security feature needed to correctly parse the json from Udacity
-        let range = Range(5..<data.count)
-        let newData = data.subdata(in: range) /* subset response data! */
+        if securityCheck {
+            // security feature needed to correctly parse the json from Udacity
+            let range = Range(5..<data.count)
+            let newData = data.subdata(in: range) /* subset response data! */
+            jsonHandler(newData, completion)
+        }else {
+            // This function is passed as parameter and is tailored on the type
+            // of json I need to send/parse
+            jsonHandler(data, completion)
+            
+        }
         
-        // This function is passed as parameter and is tailored on the type
-        // of json I need to send/parse
-        jsonHandler(newData, completion)
-        
-        })
+    })
     task.resume()
 }
 

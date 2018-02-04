@@ -47,7 +47,7 @@ func parseAuthJson(data: Data, completion: CompletionClosure){
 }
 
 // Function to parse the Json fetched after posting the Student location
-func parseStudentLocationJson(data: Data, completion: CompletionClosure){
+func parsePostStudentLocationJson(data: Data, completion: CompletionClosure){
     
     let jsonDecoder = JSONDecoder()
     let loginResponse: LoginResponse?
@@ -77,4 +77,35 @@ func parseStudentLocationJson(data: Data, completion: CompletionClosure){
     let authData = ["key": key, "sessionId": session]
     completion(authData, nil)
 }
+
+// Function to parse the Json fetched after posting the Student location
+func parseGetStudentLocationJson(data: Data, completion: CompletionClosure){
+    
+    let jsonDecoder = JSONDecoder()
+    let studentLocationResponse: Results?
+    do {
+        studentLocationResponse = try jsonDecoder.decode(Results.self, from: data)
+    }catch {
+        print(Constants.Errors.parsingStudentJson)
+        sendError(Constants.Errors.parsingStudentJson, "parseGetStudentLocationJson", completion: completion)
+        return
+    }
+        
+    if let studentData = studentLocationResponse {
+        completion(studentData.results as? [String:Any], nil)
+    }else{
+        sendError(Constants.Errors.parsingStudentJson, "parseGetStudentLocationJson", completion: completion)
+        return
+    }
+}
+
+//func testParsing(data: Data, completion: CompletionClosure){
+//
+//    let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//
+//    print(json)
+//
+//
+//
+//}
 

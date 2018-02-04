@@ -41,7 +41,7 @@ func buildUrl(baseUrl: String, path:String?, query: [String:String]?) -> URL?{
 }
 
 // The following function builds a request based on the Http method type
-func buildRequest(url: URL, method: String?, body: Data?) -> URLRequest{
+func buildRequest(url: URL, method: String?, body: Data?, apis: Bool) -> URLRequest{
     
     var request = URLRequest(url: url)
     
@@ -51,8 +51,14 @@ func buildRequest(url: URL, method: String?, body: Data?) -> URLRequest{
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = body
+    }else{// else it's GET
+        if apis == true {// fetching students location data
+            request.addValue(Constants.Apis.parseID, forHTTPHeaderField: "X-Parse-Application-Id")
+            request.addValue(Constants.Apis.parseKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        }
     }
-    // else it's GET
+    
+    
     return request
 }
 

@@ -20,8 +20,8 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginTapped(_ sender: Any) {
-        //login(username.text, password.text)
-        self.performSegue(withIdentifier: "Map", sender: nil)
+        login(username.text, password.text)
+       // self.performSegue(withIdentifier: "Map", sender: nil)
 
     }
     
@@ -58,8 +58,9 @@ class LoginViewController: UIViewController {
         }
         
         // create the url POST request 
-        let request = buildRequest(url: murl, method: "POST", body: body)
-        makeConnection(request: request, jsonHandler: parseAuthJson, completion: {(data, error) in
+        let request = buildRequest(url: murl, method: "POST", body: body, apis: false)
+        // make the connection
+        makeConnection(request: request, securityCheck: true, jsonHandler: parseAuthJson, completion: {(data, error) in
             
             guard (error == nil) else {
                 print(error!.localizedDescription)
@@ -69,6 +70,7 @@ class LoginViewController: UIViewController {
                 return
             }
             
+            // The "data" is a parsed dictionary here
             guard let data = data else {
                 print(Constants.Errors.dataTitle)
                 displayError(errorTitle: Constants.Errors.dataTitle, errorMsg: Constants.Errors.dataMsg, presenting: { alert in
@@ -90,6 +92,9 @@ class LoginViewController: UIViewController {
                 return
             }
       
+            
+            
+            
         })
     }
     
