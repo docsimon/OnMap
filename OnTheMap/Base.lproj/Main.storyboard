@@ -209,7 +209,7 @@
                         <viewLayoutGuide key="safeArea" id="3xc-Q4-FxS"/>
                     </view>
                     <connections>
-                        <outlet property="map" destination="c3C-vo-489" id="hjk-Zk-ppt"/>
+                        <outlet property="mapView" destination="c3C-vo-489" id="JxD-TL-X3K"/>
                         <outlet property="mediaUrl" destination="DLH-jI-uHA" id="xvr-wg-EMB"/>
                     </connections>
                 </viewController>

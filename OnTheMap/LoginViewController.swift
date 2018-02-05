@@ -20,8 +20,8 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginTapped(_ sender: Any) {
-        login(username.text, password.text)
-       // self.performSegue(withIdentifier: "Map", sender: nil)
+       // login(username.text, password.text)
+        self.performSegue(withIdentifier: "Map", sender: nil)
 
     }
     

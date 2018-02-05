@@ -38,6 +38,9 @@ struct Constants {
         static let wrongUserKey = "Wrong or missing userkey"
         static let invalidLocation = "Location error"
         static let invalidLocationMsg = "Location can't be found"
+        static let noStudentLocations = "No Student Locations"
+        static let noStudentLocationsMsg = "Problems displaying student locations"
+
 
         
     }

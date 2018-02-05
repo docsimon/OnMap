@@ -11,7 +11,7 @@ import MapKit
 
 class DetailedMapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mediaUrl: UITextField!
-    @IBOutlet weak var map: MKMapView!
+    @IBOutlet weak var mapView: MKMapView!
     let regionRadius: CLLocationDistance = 100000
     var myLocation: String = ""
     var coordinates: CLPlacemark? = nil
@@ -23,7 +23,15 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
     
     func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,regionRadius, regionRadius)
-        map.setRegion(coordinateRegion, animated: false)
+        mapView.setRegion(coordinateRegion, animated: false)
+    }
+    
+    func setAnnotation(location: CLLocation){
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = location.coordinate
+        annotation.title = "\(Constants.UserPersonalData.firstName) \(Constants.UserPersonalData.lastName)"
+        self.mapView.addAnnotations([annotation])
+
     }
     @IBAction func submitLocation(_ sender: Any) {
         postStudentLocation(mediaUrl?.text, locationData: coordinates)
@@ -145,6 +153,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
             
             if let coordinate = self.coordinates?.location {
                 self.centerMapOnLocation(location: coordinate)
+                self.setAnnotation(location: coordinate)
             }
         }
     }

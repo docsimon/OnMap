@@ -15,14 +15,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
-       // displaySession(id: sid)
         addBarButtons(vc: self)
         fetchStudentsLocation()
     }
 
-//    func displaySession(id: String){
-//    }
-    
     @objc func pin(){
         performSegue(withIdentifier: "pinMap", sender: nil)
     }
@@ -62,13 +58,40 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
                 return
             }
             
-            DispatchQueue.main.async {
-                self.performSegue(withIdentifier: "Map", sender: nil)
+            if let studentArray = data["results"] as? [[String:Any]] {
+                self.addAnnotationsToMap(locations: studentArray)
+            }else {
+                displayError(errorTitle: Constants.Errors.noStudentLocations, errorMsg: Constants.Errors.noStudentLocationsMsg, presenting: { alert in
+                    self.present(alert, animated: true)
+                })
             }
            
-            
         })
-        
+    }
+    
+    func addAnnotationsToMap(locations: [[String:Any]]){
+        var annotations = [MKPointAnnotation]()
+        for dictionary in locations {
+            let annotation = MKPointAnnotation()
+            guard let lat = dictionary["latitude"] as? Double, let long = dictionary["longitude"] as? Double  else {
+                continue
+            }
+            
+            let latitude = CLLocationDegrees(lat)
+            let longitude = CLLocationDegrees(long)
+            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            annotation.coordinate = coordinate
+            
+            if let first = dictionary["firstName"] as? String, let last  = dictionary["lastName"] as? String {
+                annotation.title = "\(first) \(last)"
+            }
+            
+            if let mediaURL = dictionary["mediaURL"] as? String {
+                annotation.subtitle = mediaURL
+            }
+            annotations.append(annotation)
+        }
+        self.mapView.addAnnotations(annotations)
     }
     
     deinit {
