@@ -44,6 +44,10 @@ class NewLocationViewController: UIViewController {
         return false
     }
     
+    @IBAction func dismiss(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     deinit {
         print("NewLocationViewController dismissed")
     }
