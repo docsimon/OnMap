@@ -40,6 +40,10 @@ struct Constants {
         static let invalidLocationMsg = "Location can't be found"
         static let noStudentLocations = "No Student Locations"
         static let noStudentLocationsMsg = "Problems displaying student locations"
+        static let errorPostingStudentLocation = "Student Location Error"
+        static let errorPostingStudentLocationMsg = "Error posting student location"
+
+
 
 
         

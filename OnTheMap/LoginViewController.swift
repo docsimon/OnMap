@@ -80,7 +80,7 @@ class LoginViewController: UIViewController {
             }
             if let key = data["key"] as? String, let session = data["sessionId"] as? String {
                 self.appDelegate.userLoginData = UserLoginData(userKey:key, userSession: session)
-                //print(userLoginData.userKey, " ", userLoginData.userSession)
+                print(self.appDelegate.userLoginData)
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "Map", sender: nil)
                 }
@@ -91,10 +91,7 @@ class LoginViewController: UIViewController {
                 })
                 return
             }
-      
-            
-            
-            
+       
         })
     }
     

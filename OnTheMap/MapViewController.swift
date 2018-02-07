@@ -12,17 +12,27 @@ import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons {
     @IBOutlet weak var mapView: MKMapView!
     var sid = ""
+    private var coordinates: CLLocationCoordinate2D?
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         addBarButtons(vc: self)
         fetchStudentsLocation()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let coordinates = coordinates {
+            setMapCenter(coordinates)
+
+        }
+    }
 
     @objc func pin(){
         performSegue(withIdentifier: "pinMap", sender: nil)
     }
     @objc func reload(){
+        fetchStudentsLocation()
     }
     
     func fetchStudentsLocation() {
@@ -60,6 +70,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
             
             if let studentArray = data["results"] as? [[String:Any]] {
                 self.addAnnotationsToMap(locations: studentArray)
+                //mapView.setCenter(CLLocationCoordinate2D, animated: true)
             }else {
                 displayError(errorTitle: Constants.Errors.noStudentLocations, errorMsg: Constants.Errors.noStudentLocationsMsg, presenting: { alert in
                     self.present(alert, animated: true)
@@ -76,7 +87,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
             guard let lat = dictionary["latitude"] as? Double, let long = dictionary["longitude"] as? Double  else {
                 continue
             }
-            
             let latitude = CLLocationDegrees(lat)
             let longitude = CLLocationDegrees(long)
             let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -92,6 +102,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
             annotations.append(annotation)
         }
         self.mapView.addAnnotations(annotations)
+    }
+    
+    private func setMapCenter(_ coordinates: CLLocationCoordinate2D){
+        self.mapView.setCenter(coordinates, animated: true)
+    }
+    
+    func setCoordinates(coordinates: CLLocationCoordinate2D){
+        self.coordinates = coordinates
     }
     
     deinit {

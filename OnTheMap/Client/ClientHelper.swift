@@ -51,13 +51,11 @@ func buildRequest(url: URL, method: String?, body: Data?, apis: Bool) -> URLRequ
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = body
-    }else{// else it's GET
-        if apis == true {// fetching students location data
-            request.addValue(Constants.Apis.parseID, forHTTPHeaderField: "X-Parse-Application-Id")
-            request.addValue(Constants.Apis.parseKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
-        }
     }
-    
+    if apis == true {// fetching students location data
+        request.addValue(Constants.Apis.parseID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(Constants.Apis.parseKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+    }
     
     return request
 }

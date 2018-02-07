@@ -234,7 +234,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="ue7-Qt-ljm">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Y1O-in-8cS" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBar" automaticallyAdjustsScrollViewInsets="NO" id="Y1O-in-8cS" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="qfT-qq-1QF">
                         <autoresizingMask key="autoresizingMask"/>

@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class DetailedMapViewController: UIViewController, MKMapViewDelegate {
+class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
     @IBOutlet weak var mediaUrl: UITextField!
     @IBOutlet weak var mapView: MKMapView!
     let regionRadius: CLLocationDistance = 100000
@@ -18,6 +18,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
+        mediaUrl.delegate = self
         findLocationOnMap()
     }
     
@@ -46,10 +47,10 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
 //            })
 //            return
 //        }
-       let uniqueKey = "1234"
+       let uniqueKey = "10688922983"
         
         // check mediaURL
-        guard let media = mediaURL, let _ = URLComponents(string: media) else {
+        guard let media = mediaURL, let _ = URLComponents(string: media.trimmingCharacters(in: .whitespacesAndNewlines)) else {
             print("Invalid url: ", mediaURL ?? "Unknown")
             displayError(errorTitle: Constants.Errors.urlTitle, errorMsg: Constants.Errors.urlMsg, presenting: {alert in
                 self.present(alert, animated: true)
@@ -70,7 +71,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
         
         // check location
         guard let latitude = coordinates?.location?.coordinate.latitude,
-            let longitude = coordinates?.location?.coordinate.latitude else {
+            let longitude = coordinates?.location?.coordinate.longitude else {
                 displayError(errorTitle: Constants.Errors.invalidLocation, errorMsg:Constants.Errors.invalidLocationMsg , presenting: { alert in
                     self.present(alert, animated: true)
                 })
@@ -83,7 +84,6 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
             return (coordinates?.locality ?? myLocation) + " " +
                    (coordinates?.country ?? "Unknown")
         }
-        
         
         print(studentPlace," ", latitude," ", longitude)
         
@@ -105,39 +105,29 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
         }
         
         // create the url POST request
-//        let request = buildRequest(url: murl, method: "POST", body: body)
-//        makeConnection(request: request, jsonHandler: parseAuthJson, completion: {(data, error) in
-//
-//            guard (error == nil) else {
-//                print(error!.localizedDescription)
-//                displayError(errorTitle: Constants.Errors.clientTitle, errorMsg: error!.localizedDescription, presenting: { alert in
-//                    self.present(alert, animated: true)
-//                })
-//                return
-//            }
-//
-//            guard let data = data else {
-//                print(Constants.Errors.dataTitle)
-//                displayError(errorTitle: Constants.Errors.dataTitle, errorMsg: Constants.Errors.dataMsg, presenting: { alert in
-//                    self.present(alert, animated: true)
-//                })
-//                return
-//            }
-//            if let key = data["key"] as? String, let session = data["sessionId"] as? String {
-//                self.userLoginData = UserLoginData(userKey:key, userSession: session)
-//                //print(userLoginData.userKey, " ", userLoginData.userSession)
-//                DispatchQueue.main.async {
-//                    self.performSegue(withIdentifier: "Map", sender: nil)
-//                }
-//            }else {
-//                print(Constants.Errors.dataTitle)
-//                displayError(errorTitle: Constants.Errors.loginUnknownErrorTitle, errorMsg: Constants.Errors.loginUnknownErrorMsg, presenting: { alert in
-//                    self.present(alert, animated: true)
-//                })
-//                return
-//            }
-//
-//        })
+        let request = buildRequest(url: murl, method: "POST", body: body, apis: true)
+        makeConnection(request: request, securityCheck: false, jsonHandler: parsePostStudentLocationJson, completion: {(data, error) in
+
+            guard (error == nil) else {
+                print(error!.localizedDescription)
+                displayError(errorTitle: Constants.Errors.errorPostingStudentLocation, errorMsg: error!.localizedDescription, presenting: { alert in
+                    self.present(alert, animated: true)
+                })
+                return
+            }
+            guard let data = data, let objectId = data["objectId"] as? String else {
+                displayError(errorTitle: Constants.Errors.errorPostingStudentLocation, errorMsg: error!.localizedDescription, presenting: { alert in
+                    self.present(alert, animated: true)
+                })
+                return
+            }
+            DispatchQueue.main.async {
+                if let tabBar = self.storyboard?.instantiateViewController(withIdentifier: "TabBar") as? UITabBarController, let coordinates = self.coordinates?.location?.coordinate {
+                    //mapView.setCoordinates(coordinates: coordinates)
+                    self.present(tabBar, animated: true, completion: nil)
+                }
+            }
+        })
         
     }
     
@@ -165,4 +155,14 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate {
     deinit {
         print("Detailed dismissed")
     }
+}
+
+// TextField protocol implementation
+extension DetailedMapViewController {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
 }
