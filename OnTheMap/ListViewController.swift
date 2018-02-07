@@ -10,9 +10,17 @@ import UIKit
 
 class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDelegate, UITableViewDataSource
 {
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var students: [[String:Any]] = []
+    let app = UIApplication.shared
     override func viewDidLoad() {
         super.viewDidLoad()
         addBarButtons(vc: self)
+        guard let studentsLoc = appDelegate.studentsLocation else {
+            print("Error loading Students location")
+            return
+        }
+        students = studentsLoc
     }
     
     @objc func pin(){
@@ -21,18 +29,35 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
     @objc func reload(){
     }
     
+    
+    
+    deinit {
+        print("deinit list")
+    }
+}
+
+extension ListViewController {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return students.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = "Simone"
-        cell.detailTextLabel?.text = "London, UK"
+        
+        if let firstName = students[indexPath.row]["firstName"], let lastName = students[indexPath.row]["lastName"] {
+            cell.textLabel?.text = "\(firstName) \(lastName)"
+        }else {
+            cell.textLabel?.text = "Unknown"
+        }
+        
+        cell.detailTextLabel?.text = students[indexPath.row]["mediaURL"] as? String
         return cell
     }
     
-    deinit {
-        print("deinit list")
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if let mediaUrl = students[indexPath.row]["mediaURL"] as? String, let url = URL(string: mediaUrl) {
+            app.open(url, options: [:], completionHandler: nil)
+        }
     }
 }

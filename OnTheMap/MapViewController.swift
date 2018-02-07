@@ -69,6 +69,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
             }
             
             if let studentArray = data["results"] as? [[String:Any]] {
+                self.appDelegate.studentsLocation = studentArray
                 self.addAnnotationsToMap(locations: studentArray)
                 //mapView.setCenter(CLLocationCoordinate2D, animated: true)
             }else {
@@ -114,5 +115,35 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
     
     deinit {
         print("deinit map")
+    }
+}
+// Implement Map delegate methods
+extension MapViewController {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        let reuseId = "pin"
+        
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView!.canShowCallout = true
+            pinView!.pinTintColor = .red
+            pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        }
+        else {
+            pinView!.annotation = annotation
+        }
+        
+        return pinView
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if control == view.rightCalloutAccessoryView {
+            let app = UIApplication.shared
+            if let subtitle = view.annotation?.subtitle, let toOpen = subtitle, let url = URL(string: toOpen) {
+                app.open(url, options: [:], completionHandler: nil)
+            }
+        }
     }
 }
