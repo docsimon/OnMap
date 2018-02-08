@@ -30,6 +30,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
 
     @objc func pin(){
         performSegue(withIdentifier: "pinMap", sender: nil)
+//        if let destVC = storyboard?.instantiateViewController(withIdentifier: "NewLocationViewController"){
+//            navigationController?.pushViewController(destVC, animated: false)
+//        }
     }
     @objc func reload(){
         fetchStudentsLocation()

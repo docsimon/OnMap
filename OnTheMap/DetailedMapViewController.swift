@@ -122,10 +122,9 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
                 return
             }
             DispatchQueue.main.async {
-                if let tabBar = self.storyboard?.instantiateViewController(withIdentifier: "TabBar") as? UITabBarController, let coordinates = self.coordinates?.location?.coordinate {
-                    //mapView.setCoordinates(coordinates: coordinates)
-                    self.present(tabBar, animated: true, completion: nil)
-                }
+                if let tabBarVC = self.getTabBarVC() {
+                    self.navigationController?.popToViewController(tabBarVC, animated: false)
+                    }
             }
         })
         
@@ -148,8 +147,10 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
         }
     }
     
-    @IBAction func dismissMap(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+    func getTabBarVC() -> UIViewController? {
+        let tabBarVC = navigationController?.viewControllers[0] as?
+        UIViewController
+        return tabBarVC
     }
     
     deinit {
