@@ -15,7 +15,9 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
     let regionRadius: CLLocationDistance = 100000
     var myLocation: String = ""
     var coordinates: CLPlacemark? = nil
+    var objectId: String?
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mediaUrl.delegate = self
@@ -41,14 +43,12 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
     private func postStudentLocation(_ mediaURL: String?, locationData: CLPlacemark?){
         
         // Check if I have the uniqueKey
-//        guard let uniqueKey = appDelegate.userLoginData?.userKey else {
-//            displayError(errorTitle: Constants.Errors.unauthorizedAccess, errorMsg: Constants.Errors.wrongUserKey, presenting: {alert in
-//                self.present(alert, animated: true)
-//            })
-//            return
-//        }
-       let uniqueKey = "10688922983"
-        
+        guard let uniqueKey = appDelegate.userLoginData?.userKey else {
+            displayError(errorTitle: Constants.Errors.unauthorizedAccess, errorMsg: Constants.Errors.wrongUserKey, presenting: {alert in
+                self.present(alert, animated: true)
+            })
+            return
+        }
         // check mediaURL
         guard let media = mediaURL, let _ = URLComponents(string: media.trimmingCharacters(in: .whitespacesAndNewlines)) else {
             print("Invalid url: ", mediaURL ?? "Unknown")
@@ -59,7 +59,9 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
         }
         
         // build and check the url
-        let url = buildUrl(baseUrl: Constants.parseBaseUrl, path: Constants.parsePostPath, query: nil)
+        
+        let path = "\(Constants.parsePostPath)/\(objectId ?? "")"
+        let url = buildUrl(baseUrl: Constants.parseBaseUrl, path: path, query: nil)
         guard let murl = url else {
             print(Constants.Errors.urlTitle)
             displayError(errorTitle: Constants.Errors.urlTitle, errorMsg: Constants.Errors.urlMsg, presenting: {alert in
@@ -67,7 +69,6 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
             })
             return
         }
-        
         
         // check location
         guard let latitude = coordinates?.location?.coordinate.latitude,
@@ -77,7 +78,6 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
                 })
                 return
         }
-        
         
         // create the POST body
         var studentPlace: String {
@@ -104,19 +104,22 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
             return
         }
         
-        // create the url POST request
-        let request = buildRequest(url: murl, method: "POST", body: body, apis: true)
-        makeConnection(request: request, securityCheck: false, jsonHandler: parsePostStudentLocationJson, completion: {(data, error) in
+        // create the url request
+        let method = objectId != nil ? "PUT" : "POST"
+        let handler = objectId != nil ? parsePutStudentLocationJson : parsePostStudentLocationJson
+        let request = buildRequest(url: murl, method: method, body: body, apis: true)
+        makeConnection(request: request, securityCheck: false, jsonHandler: handler, completion: {(data, error) in
 
+            let errorMsg = error?.localizedDescription ?? "No description"
             guard (error == nil) else {
-                print(error!.localizedDescription)
-                displayError(errorTitle: Constants.Errors.errorPostingStudentLocation, errorMsg: error!.localizedDescription, presenting: { alert in
+                print(errorMsg)
+                displayError(errorTitle: Constants.Errors.errorPostingStudentLocation, errorMsg: errorMsg, presenting: { alert in
                     self.present(alert, animated: true)
                 })
                 return
             }
-            guard let data = data, let objectId = data["objectId"] as? String else {
-                displayError(errorTitle: Constants.Errors.errorPostingStudentLocation, errorMsg: error!.localizedDescription, presenting: { alert in
+            guard data != nil else {
+                displayError(errorTitle: Constants.Errors.errorPostingStudentLocation, errorMsg: errorMsg, presenting: { alert in
                     self.present(alert, animated: true)
                 })
                 return
@@ -148,8 +151,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
     }
     
     func getTabBarVC() -> UIViewController? {
-        let tabBarVC = navigationController?.viewControllers[0] as?
-        UIViewController
+        let tabBarVC = navigationController?.viewControllers[0]
         return tabBarVC
     }
     

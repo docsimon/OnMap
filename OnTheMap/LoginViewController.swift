@@ -21,6 +21,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginTapped(_ sender: Any) {
        // login(username.text, password.text)
+        appDelegate.userLoginData = UserLoginData(userKey: "10688922983", userSession: "")
         self.performSegue(withIdentifier: "Map", sender: nil)
 
     }

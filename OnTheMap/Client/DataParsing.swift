@@ -83,24 +83,32 @@ func parseGetStudentLocationJson(data: Data, completion: CompletionClosure){
     }
     
     completion(studentLocation, nil)
-    
-//    let jsonDecoder = JSONDecoder()
-//    let studentLocationResponse: Results?
-//    do {
-//        studentLocationResponse = try jsonDecoder.decode(Results.self, from: data)
-//    }catch {
-//        print(Constants.Errors.parsingStudentJson)
-//        sendError(Constants.Errors.parsingStudentJson, "parseGetStudentLocationJson", completion: completion)
-//        return
-//    }
-//
-//    if let studentData = studentLocationResponse {
-//        completion(studentData.results as? [String:Any], nil)
-//    }else{
-//        sendError(Constants.Errors.parsingStudentJson, "parseGetStudentLocationJson", completion: completion)
-//        return
-//    }
 }
+
+// Function to parse the Json fetched after posting the Student location
+func parsePutStudentLocationJson(data: Data, completion: CompletionClosure){
+    
+    let jsonDecoder = JSONDecoder()
+    let putResponse: StudentLocationUpdateResponse?
+    do {
+        putResponse = try jsonDecoder.decode(StudentLocationUpdateResponse.self, from: data)
+    }catch {
+        print(Constants.Errors.parsingLoginJson)
+        sendError(Constants.Errors.parsingLoginJson, "parsePutStudentLocationJson", completion: completion)
+        return
+    }
+    
+    guard let response = putResponse?.updatedAt else{
+        sendError(Constants.Errors.userStatus, "parsePutStudentLocationJson", completion: completion)
+        return
+    }
+    
+    
+    let putData = ["updatedAt": response]
+    print("cippa: ", putData)
+    completion(putData, nil)
+}
+
 
 //func testParsing(data: Data, completion: CompletionClosure){
 //

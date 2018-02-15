@@ -12,6 +12,7 @@ import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons {
     @IBOutlet weak var mapView: MKMapView!
     var sid = ""
+    var objectId: String?
     private var coordinates: CLLocationCoordinate2D?
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     override func viewDidLoad() {
@@ -29,12 +30,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
     }
 
     @objc func pin(){
-        performSegue(withIdentifier: "pinMap", sender: nil)
-//        if let destVC = storyboard?.instantiateViewController(withIdentifier: "NewLocationViewController"){
-//            navigationController?.pushViewController(destVC, animated: false)
-//        }
+        if let objectId = updatePosition() {
+            // display the alert
+            self.objectId = objectId
+            displayUpdateOptions(optionTitle: "Do you vant to update your position?", action: updateLocation, presenting:{alert in
+                self.present(alert, animated: true)
+            })
+        }
+       // performSegue(withIdentifier: "pinMap", sender: nil)
     }
     @objc func reload(){
+        appDelegate.studentsLocation = nil
         fetchStudentsLocation()
     }
     
@@ -74,6 +80,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
             if let studentArray = data["results"] as? [[String:Any]] {
                 self.appDelegate.studentsLocation = studentArray
                 self.addAnnotationsToMap(locations: studentArray)
+                print(studentArray)
                 //mapView.setCenter(CLLocationCoordinate2D, animated: true)
             }else {
                 displayError(errorTitle: Constants.Errors.noStudentLocations, errorMsg: Constants.Errors.noStudentLocationsMsg, presenting: { alert in
@@ -116,9 +123,20 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
         self.coordinates = coordinates
     }
     
+    func updateLocation(){
+        performSegue(withIdentifier: "pinMap", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destVC = segue.destination as? NewLocationViewController {
+            destVC.objectId = objectId
+        }
+    }
+    
     deinit {
         print("deinit map")
     }
+    
 }
 // Implement Map delegate methods
 extension MapViewController {

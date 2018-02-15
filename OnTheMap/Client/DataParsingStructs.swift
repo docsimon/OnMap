@@ -52,6 +52,11 @@ struct StudentLocationResponse: Codable {
     let objectId: String
 }
 
+// Response after posting the user location
+struct StudentLocationUpdateResponse: Codable {
+    let updatedAt: String
+}
+
 // Response after  GET students location
 struct Results: Codable {
     let results: [StudentLocationData?]

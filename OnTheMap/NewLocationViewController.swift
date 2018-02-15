@@ -11,6 +11,7 @@ import UIKit
 class NewLocationViewController: UIViewController {
 
     @IBOutlet weak var studentPlace: UITextField!
+    var objectId: String?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,6 +32,7 @@ class NewLocationViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destVC = segue.destination as? DetailedMapViewController, let place = studentPlace?.text {
             destVC.myLocation = place
+            destVC.objectId = objectId
         }else{
             //TODO: display an error message here
             print("error")
