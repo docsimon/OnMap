@@ -215,6 +215,7 @@
                 <tabBarController storyboardIdentifier="TabBar" automaticallyAdjustsScrollViewInsets="NO" id="Y1O-in-8cS" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="qfT-qq-1QF">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -281,6 +282,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="YxU-Wz-uc2"/>
                     <connections>
+                        <outlet property="tableView" destination="deV-TL-rAx" id="nLB-iO-4wK"/>
                         <segue destination="c8v-ok-aL4" kind="show" identifier="pinList" id="8jR-Kk-mQf"/>
                     </connections>
                 </viewController>

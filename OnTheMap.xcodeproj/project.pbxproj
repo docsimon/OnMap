@@ -18,7 +18,7 @@
 		CA8929FB201507BF0065D23F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8929FA201507BF0065D23F /* Constants.swift */; };
 		CA8FEC722025D765008C8749 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8FEC712025D765008C8749 /* ListViewController.swift */; };
 		CA8FEC942025EE6C008C8749 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8FEC932025EE6C008C8749 /* Protocols.swift */; };
-		CA8FEC9620261E2B008C8749 /* helperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8FEC9520261E2B008C8749 /* helperFunctions.swift */; };
+		CA8FEC9620261E2B008C8749 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8FEC9520261E2B008C8749 /* HelperFunctions.swift */; };
 		CA8FEC9820262235008C8749 /* NewLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8FEC9720262235008C8749 /* NewLocationViewController.swift */; };
 		CA8FEC9A20262F67008C8749 /* DetailedMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8FEC9920262F67008C8749 /* DetailedMapViewController.swift */; };
 		CABF2A06201C92AF00E3F358 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABF2A05201C92AF00E3F358 /* Alerts.swift */; };
@@ -41,7 +41,7 @@
 		CA8929FA201507BF0065D23F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CA8FEC712025D765008C8749 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		CA8FEC932025EE6C008C8749 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
-		CA8FEC9520261E2B008C8749 /* helperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helperFunctions.swift; sourceTree = "<group>"; };
+		CA8FEC9520261E2B008C8749 /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		CA8FEC9720262235008C8749 /* NewLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLocationViewController.swift; sourceTree = "<group>"; };
 		CA8FEC9920262F67008C8749 /* DetailedMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedMapViewController.swift; sourceTree = "<group>"; };
 		CABF2A05201C92AF00E3F358 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
@@ -88,7 +88,7 @@
 				CA8FEC9720262235008C8749 /* NewLocationViewController.swift */,
 				CA8FEC712025D765008C8749 /* ListViewController.swift */,
 				CABF2A0B201FA15C00E3F358 /* MapViewController.swift */,
-				CA8FEC9520261E2B008C8749 /* helperFunctions.swift */,
+				CA8FEC9520261E2B008C8749 /* HelperFunctions.swift */,
 				CA8929E82014A7620065D23F /* Assets.xcassets */,
 				CA8929EA2014A7620065D23F /* LaunchScreen.storyboard */,
 				CA8929ED2014A7620065D23F /* Info.plist */,
@@ -191,7 +191,7 @@
 				CABF2A0C201FA15C00E3F358 /* MapViewController.swift in Sources */,
 				CA8929E22014A7620065D23F /* AppDelegate.swift in Sources */,
 				CA8FEC722025D765008C8749 /* ListViewController.swift in Sources */,
-				CA8FEC9620261E2B008C8749 /* helperFunctions.swift in Sources */,
+				CA8FEC9620261E2B008C8749 /* HelperFunctions.swift in Sources */,
 				CA8929F92014F5940065D23F /* ClientHelper.swift in Sources */,
 				CA8929F72014D54F0065D23F /* DataParsing.swift in Sources */,
 				CA8929F52014D3790065D23F /* Client.swift in Sources */,

@@ -16,7 +16,6 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
     var myLocation: String = ""
     var coordinates: CLPlacemark? = nil
     var objectId: String?
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()

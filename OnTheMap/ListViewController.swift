@@ -10,22 +10,21 @@ import UIKit
 
 class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDelegate, UITableViewDataSource
 {
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var students: [[String:Any]] = []
     let app = UIApplication.shared
+    @IBOutlet weak var tableView: UITableView!
     var objectId: String?
+    var counter = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
         addBarButtons(vc: self)
-        guard let studentsLoc = appDelegate.studentsLocation else {
-            print("Error loading Students location")
-            return
-        }
-        students = studentsLoc
+    fetchData()
+        
     }
     
     @objc func pin(){
-        if let objectId = updatePosition() {
+        if let objectId = updatePosition(studentArray: students) {
             // display the alert
             self.objectId = objectId
             displayUpdateOptions(optionTitle: "Do you vant to update your position?", action: updateLocation, presenting:{alert in
@@ -35,10 +34,24 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
     }
     
     @objc func reload(){
+        fetchData()
+    }
+    
+    func reloadTable(data: [[String:Any]]){
+        students = data
+        DispatchQueue.main.async{
+            self.tableView.reloadData()
+        }
+        
     }
     
     func updateLocation(){
         performSegue(withIdentifier: "pinList", sender: nil)
+    }
+    
+    func fetchData(){
+        students.removeAll()
+        fetchStudentsLocation(completion: reloadTable, sender: self)
     }
     
     deinit {
@@ -55,11 +68,10 @@ extension ListViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
         if let firstName = students[indexPath.row]["firstName"], let lastName = students[indexPath.row]["lastName"] {
-            cell.textLabel?.text = "\(firstName) \(lastName)"
+            cell.textLabel?.text = "\(firstName) \(lastName) \(counter += 1)"
         }else {
             cell.textLabel?.text = "Unknown"
         }
-        
         cell.detailTextLabel?.text = students[indexPath.row]["mediaURL"] as? String
         return cell
     }

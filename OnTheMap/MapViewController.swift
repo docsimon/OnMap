@@ -12,13 +12,14 @@ import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons {
     @IBOutlet weak var mapView: MKMapView!
     var sid = ""
+    var students: [[String:Any]] = []
     var objectId: String?
     private var coordinates: CLLocationCoordinate2D?
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addBarButtons(vc: self)
-        fetchStudentsLocation()
+        fetchData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,7 +30,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
     }
 
     @objc func pin(){
-        if let objectId = updatePosition() {
+        if let objectId = updatePosition(studentArray: students) {
             // display the alert
             self.objectId = objectId
             displayUpdateOptions(optionTitle: "Do you vant to update your position?", action: updateLocation, presenting:{alert in
@@ -38,61 +39,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
         }
     }
     @objc func reload(){
-        appDelegate.studentsLocation = nil
-        fetchStudentsLocation()
-    }
-    
-    func fetchStudentsLocation() {
-        // clear the students array
-        appDelegate.studentsLocation = nil
-        // remove annotation form the map
-        mapView.removeAnnotations(mapView.annotations)
-        
-        // build and check the url
-        let url = buildUrl(baseUrl: Constants.parseBaseUrl, path: Constants.parseGetPath, query: nil)
-        guard let murl = url else {
-            print(Constants.Errors.urlTitle)
-            displayError(errorTitle: Constants.Errors.urlTitle, errorMsg: Constants.Errors.urlMsg, presenting: {alert in
-                self.present(alert, animated: true)
-            })
-            return
-        }
-        
-        // create the url POST request
-        let request = buildRequest(url: murl, method: nil, body: nil, apis: true)
-        
-        // make the connection
-        makeConnection(request: request, securityCheck: false, jsonHandler: parseGetStudentLocationJson, completion: {[weak self] (data, error) in
-            
-            guard (error == nil) else {
-                print(error!.localizedDescription)
-                displayError(errorTitle: Constants.Errors.clientTitle, errorMsg: error!.localizedDescription, presenting: { alert in
-                    self?.present(alert, animated: true)
-                })
-                return
-            }
-            
-            guard let data = data else {
-                print(Constants.Errors.dataTitle)
-                displayError(errorTitle: Constants.Errors.dataTitle, errorMsg: Constants.Errors.dataMsg, presenting: { alert in
-                    self?.present(alert, animated: true)
-                })
-                return
-            }
-            
-            if let studentArray = data["results"] as? [[String:Any]] {
-                self?.appDelegate.studentsLocation = studentArray
-                self?.addAnnotationsToMap(locations: studentArray)
-            }else {
-                displayError(errorTitle: Constants.Errors.noStudentLocations, errorMsg: Constants.Errors.noStudentLocationsMsg, presenting: { alert in
-                    self?.present(alert, animated: true)
-                })
-            }
-           
-        })
+        fetchData()
     }
     
     func addAnnotationsToMap(locations: [[String:Any]]){
+        students = locations
         var annotations = [MKPointAnnotation]()
         for dictionary in locations {
             let annotation = MKPointAnnotation()
@@ -134,6 +85,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
         }
     }
     
+    func resetMap(){
+        mapView.removeAnnotations(mapView.annotations)
+    }
+    
+    func fetchData(){
+        resetMap()
+        students.removeAll()
+        fetchStudentsLocation(completion: addAnnotationsToMap, sender: self)
+    }
+        
     deinit {
         print("deinit map")
     }

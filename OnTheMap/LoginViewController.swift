@@ -13,7 +13,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     //var userLoginData: UserLoginData? = nil
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -80,8 +79,7 @@ class LoginViewController: UIViewController {
                 return
             }
             if let key = data["key"] as? String, let session = data["sessionId"] as? String {
-                self.appDelegate.userLoginData = UserLoginData(userKey:key, userSession: session)
-                print(self.appDelegate.userLoginData)
+                appDelegate.userLoginData = UserLoginData(userKey:key, userSession: session)
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "Map", sender: nil)
                 }
