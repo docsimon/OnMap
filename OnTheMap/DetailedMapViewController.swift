@@ -21,6 +21,8 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
         super.viewDidLoad()
         mediaUrl.delegate = self
         findLocationOnMap()
+        print("objectId from DetailedMapVC: ", objectId!)
+
     }
     
     func centerMapOnLocation(location: CLLocation) {
@@ -83,9 +85,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
             return (coordinates?.locality ?? myLocation) + " " +
                    (coordinates?.country ?? "Unknown")
         }
-        
-        print(studentPlace," ", latitude," ", longitude)
-        
+                
         let postBody = StudentLocation(
             uniqueKey: uniqueKey,
             firstName: Constants.UserPersonalData.firstName,

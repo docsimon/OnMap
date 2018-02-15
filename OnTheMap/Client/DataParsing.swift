@@ -105,18 +105,5 @@ func parsePutStudentLocationJson(data: Data, completion: CompletionClosure){
     
     
     let putData = ["updatedAt": response]
-    print("cippa: ", putData)
     completion(putData, nil)
 }
-
-
-//func testParsing(data: Data, completion: CompletionClosure){
-//
-//    let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
-//
-//    print(json)
-//
-//
-//
-//}
-

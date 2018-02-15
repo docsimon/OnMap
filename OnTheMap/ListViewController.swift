@@ -15,11 +15,11 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
     @IBOutlet weak var tableView: UITableView!
     var objectId: String?
     var counter = 0
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addBarButtons(vc: self)
-    fetchData()
+        fetchData()
         
     }
     
@@ -42,11 +42,15 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
         DispatchQueue.main.async{
             self.tableView.reloadData()
         }
-        
     }
     
     func updateLocation(){
         performSegue(withIdentifier: "pinList", sender: nil)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destVC = segue.destination as? NewLocationViewController {
+            destVC.objectId = objectId
+        }
     }
     
     func fetchData(){
@@ -68,7 +72,10 @@ extension ListViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
         if let firstName = students[indexPath.row]["firstName"], let lastName = students[indexPath.row]["lastName"] {
-            cell.textLabel?.text = "\(firstName) \(lastName) \(counter += 1)"
+            counter = counter + 1
+            let cippa: Int = counter
+            let soooga = String(describing: cippa)
+            cell.textLabel?.text = "\(firstName) \(lastName) \(soooga)"
         }else {
             cell.textLabel?.text = "Unknown"
         }

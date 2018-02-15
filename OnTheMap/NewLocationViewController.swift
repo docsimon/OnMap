@@ -14,7 +14,6 @@ class NewLocationViewController: UIViewController {
     var objectId: String?
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
 
     @IBAction func findLocation(_ sender: Any) {

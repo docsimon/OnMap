@@ -30,9 +30,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
     }
 
     @objc func pin(){
-        if let objectId = updatePosition(studentArray: students) {
+        if let objectId_ = updatePosition(studentArray: students) {
             // display the alert
-            self.objectId = objectId
+            objectId = objectId_
             displayUpdateOptions(optionTitle: "Do you vant to update your position?", action: updateLocation, presenting:{alert in
                 self.present(alert, animated: true)
             })
