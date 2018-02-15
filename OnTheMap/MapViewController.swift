@@ -25,7 +25,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
         super.viewWillAppear(animated)
         if let coordinates = coordinates {
             setMapCenter(coordinates)
-
         }
     }
 
@@ -45,6 +44,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
     }
     
     func fetchStudentsLocation() {
+        // clear the students array
+        appDelegate.studentsLocation = nil
+        // remove annotation form the map
+        mapView.removeAnnotations(mapView.annotations)
+        
         // build and check the url
         let url = buildUrl(baseUrl: Constants.parseBaseUrl, path: Constants.parseGetPath, query: nil)
         guard let murl = url else {
@@ -59,12 +63,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
         let request = buildRequest(url: murl, method: nil, body: nil, apis: true)
         
         // make the connection
-        makeConnection(request: request, securityCheck: false, jsonHandler: parseGetStudentLocationJson, completion: {(data, error) in
+        makeConnection(request: request, securityCheck: false, jsonHandler: parseGetStudentLocationJson, completion: {[weak self] (data, error) in
             
             guard (error == nil) else {
                 print(error!.localizedDescription)
                 displayError(errorTitle: Constants.Errors.clientTitle, errorMsg: error!.localizedDescription, presenting: { alert in
-                    self.present(alert, animated: true)
+                    self?.present(alert, animated: true)
                 })
                 return
             }
@@ -72,19 +76,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
             guard let data = data else {
                 print(Constants.Errors.dataTitle)
                 displayError(errorTitle: Constants.Errors.dataTitle, errorMsg: Constants.Errors.dataMsg, presenting: { alert in
-                    self.present(alert, animated: true)
+                    self?.present(alert, animated: true)
                 })
                 return
             }
             
             if let studentArray = data["results"] as? [[String:Any]] {
-                self.appDelegate.studentsLocation = studentArray
-                self.addAnnotationsToMap(locations: studentArray)
-                print(studentArray)
-                //mapView.setCenter(CLLocationCoordinate2D, animated: true)
+                self?.appDelegate.studentsLocation = studentArray
+                self?.addAnnotationsToMap(locations: studentArray)
             }else {
                 displayError(errorTitle: Constants.Errors.noStudentLocations, errorMsg: Constants.Errors.noStudentLocationsMsg, presenting: { alert in
-                    self.present(alert, animated: true)
+                    self?.present(alert, animated: true)
                 })
             }
            
