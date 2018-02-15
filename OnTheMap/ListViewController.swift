@@ -13,6 +13,7 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var students: [[String:Any]] = []
     let app = UIApplication.shared
+    var objectId: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         addBarButtons(vc: self)
@@ -24,12 +25,21 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
     }
     
     @objc func pin(){
-        performSegue(withIdentifier: "pinList", sender: nil)
+        if let objectId = updatePosition() {
+            // display the alert
+            self.objectId = objectId
+            displayUpdateOptions(optionTitle: "Do you vant to update your position?", action: updateLocation, presenting:{alert in
+                self.present(alert, animated: true)
+            })
+        }
     }
+    
     @objc func reload(){
     }
     
-    
+    func updateLocation(){
+        performSegue(withIdentifier: "pinList", sender: nil)
+    }
     
     deinit {
         print("deinit list")

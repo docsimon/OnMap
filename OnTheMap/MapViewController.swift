@@ -36,7 +36,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
                 self.present(alert, animated: true)
             })
         }
-       // performSegue(withIdentifier: "pinMap", sender: nil)
     }
     @objc func reload(){
         appDelegate.studentsLocation = nil
