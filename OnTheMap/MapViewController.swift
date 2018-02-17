@@ -40,12 +40,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
         }
     }
     @objc func logout(){
-        appDelegate.userLoginData = nil
-        if let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
-            present(loginVC, animated: true)
-        }
+        sessionLogout(completion: validateSessionLogout, sender: self)
     }
     
+    func validateSessionLogout(data: [String:Any]){
+        if let _ = data["id"] as? String {
+            appDelegate.userLoginData = nil
+            if let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+                present(loginVC, animated: true)
+            }
+        }else{
+            displayError(errorTitle: Constants.Errors.userSessionStatus, errorMsg: Constants.Errors.userSessionStatus, presenting: { alert in
+                self.present(alert, animated: true)
+            })
+        }
+    }
     
     func addAnnotationsToMap(locations: [[String:Any]]){
         students = locations

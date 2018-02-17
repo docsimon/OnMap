@@ -44,13 +44,24 @@ func buildUrl(baseUrl: String, path:String?, query: [String:String]?) -> URL?{
 func buildRequest(url: URL, method: String?, body: Data?, apis: Bool) -> URLRequest{
     
     var request = URLRequest(url: url)
-    
-    // if the method is POST or PUT
     if let method = method {
         request.httpMethod = method
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = body
+        if method == "DELETE" {
+            var xsrfCookie: HTTPCookie? = nil
+            let sharedCookieStorage = HTTPCookieStorage.shared
+            for cookie in sharedCookieStorage.cookies! {
+                if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+            }
+            if let xsrfCookie = xsrfCookie {
+                request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+            }
+        }
+        // if the method is POST or PUT
+        else {
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = body
+        }
     }
     if apis == true {// fetching students location data
         request.addValue(Constants.Apis.parseID, forHTTPHeaderField: "X-Parse-Application-Id")

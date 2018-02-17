@@ -74,3 +74,13 @@ struct StudentInformation: Codable {
     let uniqueKey: String?
     let updatedAt: String?
 }
+
+// Response after DELETE session
+struct DeleteResponse: Codable {
+    let session: SessionData
+}
+
+struct SessionData: Codable {
+    let id: String
+    let expiration: String
+}

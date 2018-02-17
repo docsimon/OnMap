@@ -85,3 +85,47 @@ func orderStudentArray(studentArray: [[String : Any]]) -> [[String : Any]]{
     let orderedArray = studentArray.sorted(by: { $0["updatedAt"] as! String > $1["updatedAt"] as! String })
     return orderedArray
 }
+
+func sessionLogout(completion: @escaping ([String:Any]) -> (), sender: UIViewController){
+    // build and check the url
+    let url = buildUrl(baseUrl: Constants.udacityBaseUrl, path: Constants.udacityAuthPath, query: nil)
+    guard let murl = url else {
+        print(Constants.Errors.urlTitle)
+        displayError(errorTitle: Constants.Errors.urlTitle, errorMsg: Constants.Errors.urlMsg, presenting: {alert in
+            sender.present(alert, animated: true)
+        })
+        return
+    }
+    
+    // create the request
+    let request = buildRequest(url: murl, method: "DELETE", body: nil, apis: false)
+    
+    // make the connection
+    makeConnection(request: request, securityCheck: true, jsonHandler: parseDeleteSession, completion: { (data, error) in
+        
+        guard (error == nil) else {
+            print(error!.localizedDescription)
+            displayError(errorTitle: Constants.Errors.clientTitle, errorMsg: error!.localizedDescription, presenting: { alert in
+                sender.present(alert, animated: true)
+            })
+            return
+        }
+        
+        guard let data = data else {
+            print(Constants.Errors.dataTitle)
+            displayError(errorTitle: Constants.Errors.dataTitle, errorMsg: Constants.Errors.dataMsg, presenting: { alert in
+                sender.present(alert, animated: true)
+            })
+            return
+        }
+        completion(data)
+//        if let sessionId = data["session"] as? [String:Any] {
+//            completion(sessionId)
+//        }else {
+//            displayError(errorTitle: Constants.Errors.userSessionStatus, errorMsg: Constants.Errors.userSessionStatus, presenting: { alert in
+//                sender.present(alert, animated: true)
+//            })
+//        }
+        
+    })
+}

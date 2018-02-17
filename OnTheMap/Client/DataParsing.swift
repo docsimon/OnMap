@@ -105,3 +105,25 @@ func parsePutStudentLocationJson(data: Data, completion: CompletionClosure){
     let putData = ["updatedAt": response]
     completion(putData, nil)
 }
+
+func parseDeleteSession(data: Data, completion: CompletionClosure){
+    
+    let jsonDecoder = JSONDecoder()
+    let deleteResponse: DeleteResponse?
+    do {
+        deleteResponse = try jsonDecoder.decode(DeleteResponse.self, from: data)
+    }catch {
+        print(Constants.Errors.parsingSessionDeleteJson)
+        sendError(Constants.Errors.parsingSessionDeleteJson, "parseDeleteSession", completion: completion)
+        return
+    }
+    
+    //let sessionId = appDelegate.userLoginData?.userSession
+    guard let id = deleteResponse?.session.id else{
+        sendError(Constants.Errors.userSessionStatus, "parseDeleteSession", completion: completion)
+        return
+    }
+    
+    let authData = ["id": id]
+    completion(authData, nil)
+}

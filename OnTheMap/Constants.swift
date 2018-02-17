@@ -28,9 +28,12 @@ struct Constants {
         static let dataMsg = "Data received are empty or corrupted"
         static let parsingLoginJson = "Error parsing login response json"
         static let parsingStudentJson = "Error parsing student response json"
+        static let parsingSessionDeleteJson = "Error parsing session delete response json"
+        
         static let userStatus = "User not registered"
         static let userKey = "User key not valid"
         static let userSession = "User session not valid"
+        static let userSessionStatus = "Problem logging out"
         static let loginUnknownErrorTitle = "Unknown Error"
         static let loginUnknownErrorMsg = "Please try to login again"
         static let unauthorizedAccess = "Unauthorized Access"
