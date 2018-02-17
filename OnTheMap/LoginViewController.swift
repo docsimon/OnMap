@@ -8,13 +8,14 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        username.delegate = self
+        password.delegate = self
     }
     
     @IBAction func loginTapped(_ sender: Any) {
@@ -93,4 +94,13 @@ class LoginViewController: UIViewController {
     deinit {
         print("deallocated")
     }
+}
+// TextField protocol implementation
+extension LoginViewController {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
 }

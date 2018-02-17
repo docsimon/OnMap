@@ -59,10 +59,10 @@ struct StudentLocationUpdateResponse: Codable {
 
 // Response after  GET students location
 struct Results: Codable {
-    let results: [StudentLocationData?]
+    let results: [StudentInformation?]
 }
 
-struct StudentLocationData: Codable {
+struct StudentInformation: Codable {
     let createdAt: String?
     let firstName: String?
     let lastName: String?

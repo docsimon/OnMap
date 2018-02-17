@@ -37,7 +37,8 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
     }
     
     func reloadTable(data: [[String:Any]]){
-        students = data
+        students = orderStudentArray(studentArray: data)
+        print(students)
         DispatchQueue.main.async{
             self.tableView.reloadData()
         }

@@ -79,3 +79,9 @@ func fetchStudentsLocation(completion: @escaping OptionalCompletion, sender: UIV
         
     })
 }
+
+func orderStudentArray(studentArray: [[String : Any]]) -> [[String : Any]]{
+    
+    let orderedArray = studentArray.sorted(by: { $0["updatedAt"] as! String > $1["updatedAt"] as! String })
+    return orderedArray
+}
