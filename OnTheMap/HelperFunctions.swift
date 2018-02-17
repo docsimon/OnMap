@@ -20,7 +20,6 @@ func updatePosition(studentArray: [[String:Any]]) -> String?{
     }
     let userData = studentArray.filter { student in
         if let studentId = student["uniqueKey"] as? String, studentId == userKey{
-            print(studentId, " ", userKey)
             return true
         }
         return false
@@ -39,7 +38,7 @@ func updatePosition(studentArray: [[String:Any]]) -> String?{
 func fetchStudentsLocation(completion: @escaping OptionalCompletion, sender: UIViewController) {
     
     // build and check the url
-    let url = buildUrl(baseUrl: Constants.parseBaseUrl, path: Constants.parseGetPath, query: nil)
+    let url = buildUrl(baseUrl: Constants.parseBaseUrl, path: Constants.parsePath, query: nil)
     guard let murl = url else {
         print(Constants.Errors.urlTitle)
         displayError(errorTitle: Constants.Errors.urlTitle, errorMsg: Constants.Errors.urlMsg, presenting: {alert in

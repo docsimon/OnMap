@@ -21,8 +21,6 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
         super.viewDidLoad()
         mediaUrl.delegate = self
         findLocationOnMap()
-        print("objectId from DetailedMapVC: ", objectId!)
-
     }
     
     func centerMapOnLocation(location: CLLocation) {
@@ -61,7 +59,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
         
         // build and check the url
         
-        let path = "\(Constants.parsePostPath)/\(objectId ?? "")"
+        let path = "\(Constants.parsePath)/\(objectId ?? "")"
         let url = buildUrl(baseUrl: Constants.parseBaseUrl, path: path, query: nil)
         guard let murl = url else {
             print(Constants.Errors.urlTitle)

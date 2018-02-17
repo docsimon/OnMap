@@ -12,17 +12,13 @@ class LoginViewController: UIViewController {
 
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
-    //var userLoginData: UserLoginData? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
     
     @IBAction func loginTapped(_ sender: Any) {
-       // login(username.text, password.text)
-        appDelegate.userLoginData = UserLoginData(userKey: "10688922983", userSession: "")
-        self.performSegue(withIdentifier: "Map", sender: nil)
-
+       login(username.text, password.text)
     }
     
     func login(_ username: String?, _ password: String?) {
@@ -79,8 +75,8 @@ class LoginViewController: UIViewController {
                 return
             }
             if let key = data["key"] as? String, let session = data["sessionId"] as? String {
-                appDelegate.userLoginData = UserLoginData(userKey:key, userSession: session)
                 DispatchQueue.main.async {
+                    appDelegate.userLoginData = UserLoginData(userKey:key, userSession: session)
                     self.performSegue(withIdentifier: "Map", sender: nil)
                 }
             }else {
@@ -92,12 +88,6 @@ class LoginViewController: UIViewController {
             }
        
         })
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destVC = segue.destination as? MapViewController{
-            destVC.sid = "cippa"
-        }
     }
     
     deinit {

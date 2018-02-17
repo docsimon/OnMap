@@ -64,7 +64,6 @@ func parsePostStudentLocationJson(data: Data, completion: CompletionClosure){
         return
     }
 
-    
     let postData = ["objectId": objectId]
     completion(postData, nil)
 }
@@ -102,7 +101,6 @@ func parsePutStudentLocationJson(data: Data, completion: CompletionClosure){
         sendError(Constants.Errors.userStatus, "parsePutStudentLocationJson", completion: completion)
         return
     }
-    
     
     let putData = ["updatedAt": response]
     completion(putData, nil)

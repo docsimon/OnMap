@@ -8,16 +8,16 @@
 
 import UIKit
 
-class NewLocationViewController: UIViewController {
+class NewLocationViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var studentPlace: UITextField!
     var objectId: String?
     override func viewDidLoad() {
         super.viewDidLoad()
+        studentPlace.delegate = self
     }
 
     @IBAction func findLocation(_ sender: Any) {
-       // dismiss(animated: false, completion: nil)
         if checkLocation(location: studentPlace?.text){
         performSegue(withIdentifier: "detailedMap", sender: nil)
         }else{
@@ -48,4 +48,14 @@ class NewLocationViewController: UIViewController {
     deinit {
         print("NewLocationViewController dismissed")
     }
+}
+
+// TextField protocol implementation
+extension NewLocationViewController {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
 }

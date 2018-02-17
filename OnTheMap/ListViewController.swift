@@ -14,7 +14,6 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
     let app = UIApplication.shared
     @IBOutlet weak var tableView: UITableView!
     var objectId: String?
-    var counter = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,10 +71,7 @@ extension ListViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
         if let firstName = students[indexPath.row]["firstName"], let lastName = students[indexPath.row]["lastName"] {
-            counter = counter + 1
-            let cippa: Int = counter
-            let soooga = String(describing: cippa)
-            cell.textLabel?.text = "\(firstName) \(lastName) \(soooga)"
+            cell.textLabel?.text = "\(firstName) \(lastName)"
         }else {
             cell.textLabel?.text = "Unknown"
         }

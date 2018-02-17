@@ -14,8 +14,7 @@ struct Constants {
     static let udacityBaseUrl = "www.udacity.com"
     static let udacityAuthPath = "/api/session"
     static let parseBaseUrl = "parse.udacity.com"
-    static let parseGetPath = "/parse/classes/StudentLocation"
-    static let parsePostPath = "/parse/classes/StudentLocation"
+    static let parsePath = "/parse/classes/StudentLocation"
     
     struct Errors {
         static let loginTitle = "Login Error"
@@ -55,8 +54,8 @@ struct Constants {
     }
     
     struct UserPersonalData{
-       static let firstName = "Ciccio"
-       static let lastName = "Formaggio"
+       static let firstName = "Simone"
+       static let lastName = "B."
     }
     
 }

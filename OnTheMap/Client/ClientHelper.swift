@@ -77,9 +77,7 @@ func loginDataAreValid(username:String?, password: String?) -> Bool{
     guard (username?.isEmpty == false), (password?.isEmpty == false) else {
         return false
     }
-    
     // TODO: add other checks on the username and password
-    
     return true
 }
 
