@@ -13,7 +13,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="LoginViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -197,10 +197,15 @@
                                     <action selector="submitLocation:" destination="dVF-BO-ILX" eventType="touchUpInside" id="iaF-Iy-cIJ"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-c4-62Q">
+                                <rect key="frame" x="177" y="323.5" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="u7Q-c4-62Q" firstAttribute="centerY" secondItem="FmL-5p-YLr" secondAttribute="centerY" id="0WY-T6-TMk"/>
                             <constraint firstItem="c3C-vo-489" firstAttribute="top" secondItem="DLH-jI-uHA" secondAttribute="bottom" constant="8" symbolic="YES" id="2x3-R3-zag"/>
+                            <constraint firstItem="u7Q-c4-62Q" firstAttribute="centerX" secondItem="FmL-5p-YLr" secondAttribute="centerX" id="88q-px-z2M"/>
                             <constraint firstItem="DLH-jI-uHA" firstAttribute="top" secondItem="3xc-Q4-FxS" secondAttribute="top" id="E1f-AJ-qyv"/>
                             <constraint firstItem="6eO-4k-cgA" firstAttribute="leading" secondItem="3xc-Q4-FxS" secondAttribute="leading" constant="128" id="Rgv-h5-VM2"/>
                             <constraint firstItem="3xc-Q4-FxS" firstAttribute="trailing" secondItem="DLH-jI-uHA" secondAttribute="trailing" id="fYx-GF-b5L"/>
@@ -214,6 +219,7 @@
                         <viewLayoutGuide key="safeArea" id="3xc-Q4-FxS"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="u7Q-c4-62Q" id="Ie8-7a-zws"/>
                         <outlet property="mapView" destination="c3C-vo-489" id="e8z-GD-SaF"/>
                         <outlet property="mediaUrl" destination="DLH-jI-uHA" id="xvr-wg-EMB"/>
                     </connections>
@@ -348,6 +354,6 @@
         <image name="Udacity" width="62" height="62"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8jR-Kk-mQf"/>
+        <segue reference="JrB-aZ-FMH"/>
     </inferredMetricsTieBreakers>
 </document>

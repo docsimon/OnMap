@@ -19,7 +19,10 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
         super.viewDidLoad()
         addBarButtons(vc: self)
         fetchData()
-        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchData()
     }
     
     @objc func pin(){
@@ -32,8 +35,11 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
         }
     }
     
-    @objc func reload(){
-        fetchData()
+    @objc func logout(){
+        appDelegate.userLoginData = nil
+        if let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+            present(loginVC, animated: true)
+        }
     }
     
     func reloadTable(data: [[String:Any]]){

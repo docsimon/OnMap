@@ -19,11 +19,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
     override func viewDidLoad() {
         super.viewDidLoad()
         addBarButtons(vc: self)
-        fetchData()
+        //fetchData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        fetchData()
         if let coordinates = coordinates {
             setMapCenter(coordinates)
         }
@@ -38,9 +39,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
             })
         }
     }
-    @objc func reload(){
-        fetchData()
+    @objc func logout(){
+        appDelegate.userLoginData = nil
+        if let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+            present(loginVC, animated: true)
+        }
     }
+    
     
     func addAnnotationsToMap(locations: [[String:Any]]){
         students = locations

@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 
 class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var mediaUrl: UITextField!
     @IBOutlet weak var mapView: MKMapView!
     let regionRadius: CLLocationDistance = 100000
