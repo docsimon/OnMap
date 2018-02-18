@@ -20,6 +20,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator.hidesWhenStopped = true
         mediaUrl.delegate = self
         findLocationOnMap()
     }
@@ -27,6 +28,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
     func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,regionRadius, regionRadius)
         mapView.setRegion(coordinateRegion, animated: false)
+        activityIndicator.stopAnimating()
     }
     
     func setAnnotation(location: CLLocation){
@@ -132,7 +134,7 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
     }
     
     func findLocationOnMap(){
-        
+        activityIndicator.startAnimating()
         let geoDecoder = CLGeocoder()
         geoDecoder.geocodeAddressString(myLocation){ (location, error) in
             guard error == nil, let location = location, location.count > 0 else{

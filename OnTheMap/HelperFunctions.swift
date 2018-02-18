@@ -119,13 +119,6 @@ func sessionLogout(completion: @escaping ([String:Any]) -> (), sender: UIViewCon
             return
         }
         completion(data)
-//        if let sessionId = data["session"] as? [String:Any] {
-//            completion(sessionId)
-//        }else {
-//            displayError(errorTitle: Constants.Errors.userSessionStatus, errorMsg: Constants.Errors.userSessionStatus, presenting: { alert in
-//                sender.present(alert, animated: true)
-//            })
-//        }
         
     })
 }
