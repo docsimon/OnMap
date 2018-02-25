@@ -1,5 +1,5 @@
 //
-//  elperFunctions.swift
+//  HelperFunctions.swift
 //  OnTheMap
 //
 //  Created by doc on 03/02/2018.
@@ -9,25 +9,25 @@
 import Foundation
 import UIKit
 
-typealias OptionalCompletion = ([[String:Any]])->()
+typealias OptionalCompletion = ([StudentInformation?])->()
 
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-func updatePosition(studentArray: [[String:Any]]) -> String?{
+func updatePosition(studentArray: [StudentInformation]?) -> String?{
     guard let userKey = appDelegate.userLoginData?.userKey else {
         print("No user key")
         return nil
     }
-    let userData = studentArray.filter { student in
-        if let studentId = student["uniqueKey"] as? String, studentId == userKey{
+    let userData = studentArray?.filter { student in
+        if let studentId = student.uniqueKey, studentId == userKey{
             return true
         }
         return false
     }
     
     // userData should be 1
-    if userData.count > 0 {
-        if let objectId = userData[0]["objectId"] as? String {
+   if let userDataUnwrapped = userData, userDataUnwrapped.count > 0 {
+        if let objectId = userDataUnwrapped[0].objectId {
             // call the alert
             return objectId
         }
@@ -71,19 +71,11 @@ func fetchStudentsLocation(completion: @escaping OptionalCompletion, sender: UIV
             })
             return
         }
-        
-        if let studentArray = data["results"] as? [[String:Any]] {
-            completion(studentArray)
-        }else {
-            displayError(errorTitle: Constants.Errors.noStudentLocations, errorMsg: Constants.Errors.noStudentLocationsMsg, presenting: { alert in
-                sender.present(alert, animated: true)
-            })
-        }
-        
+        completion((data as! [StudentInformation?]))
     })
 }
 
-func sessionLogout(completion: @escaping ([String:Any]) -> (), sender: UIViewController){
+func sessionLogout(completion: @escaping (Codable?) -> (), sender: UIViewController){
     // build and check the url
     let url = buildUrl(baseUrl: Constants.udacityBaseUrl, path: Constants.udacityAuthPath, query: nil)
     guard let murl = url else {
@@ -115,7 +107,7 @@ func sessionLogout(completion: @escaping ([String:Any]) -> (), sender: UIViewCon
             })
             return
         }
-        completion(data)
+        completion(data[0])
         
     })
 }

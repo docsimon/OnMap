@@ -10,7 +10,7 @@
 
 import Foundation
 
-typealias CompletionClosure = ([String:Any]?, Error?) -> Void
+typealias CompletionClosure = ([Codable?]?, Error?) -> Void
 typealias JsonHandlerFunction = (Data, CompletionClosure) -> Void
 
 // Function to parse the Json fetched after sending the Username and Password to
@@ -32,18 +32,17 @@ func parseAuthJson(data: Data, completion: CompletionClosure){
         return
     }
     
-    guard let key = loginResponse?.account.key else {
+    guard let _ = loginResponse?.account.key else {
         sendError(Constants.Errors.userKey, "parseAuthJson", completion: completion)
         return
     }
    
-    guard let session = loginResponse?.session.id else {
+    guard let _ = loginResponse?.session.id else {
         sendError(Constants.Errors.userSession, "parseAuthJson", completion: completion)
         return
     }
     
-    let authData = ["key": key, "sessionId": session]
-    completion(authData, nil)
+    completion([loginResponse], nil)
 }
 
 // Function to parse the Json fetched after posting the Student location
@@ -59,29 +58,28 @@ func parsePostStudentLocationJson(data: Data, completion: CompletionClosure){
         return
     }
     
-    guard let objectId = postResponse?.objectId else{
+    guard let _ = postResponse?.objectId else{
         sendError(Constants.Errors.userStatus, "parsePostStudentLocationJson", completion: completion)
         return
     }
 
-    let postData = ["objectId": objectId]
-    completion(postData, nil)
+    completion([postResponse], nil)
 }
 
 // Function to parse the Json fetched after posting the Student location
 func parseGetStudentLocationJson(data: Data, completion: CompletionClosure){
     
-    let studentLocation: [String:Any]?
-    
+    let jsonDecoder = JSONDecoder()
+    let results: Results?
     do {
-        studentLocation = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : Any]
+        results = try jsonDecoder.decode(Results.self, from: data)
     }catch {
         print(Constants.Errors.parsingStudentJson)
         sendError(Constants.Errors.parsingStudentJson, "parseGetStudentLocationJson", completion: completion)
         return
     }
     
-    completion(studentLocation, nil)
+    completion(results?.results, nil)
 }
 
 // Function to parse the Json fetched after posting the Student location
@@ -97,13 +95,12 @@ func parsePutStudentLocationJson(data: Data, completion: CompletionClosure){
         return
     }
     
-    guard let response = putResponse?.updatedAt else{
+    guard let _ = putResponse?.updatedAt else{
         sendError(Constants.Errors.userStatus, "parsePutStudentLocationJson", completion: completion)
         return
     }
     
-    let putData = ["updatedAt": response]
-    completion(putData, nil)
+    completion([putResponse], nil)
 }
 
 func parseDeleteSession(data: Data, completion: CompletionClosure){
@@ -119,11 +116,10 @@ func parseDeleteSession(data: Data, completion: CompletionClosure){
     }
     
     //let sessionId = appDelegate.userLoginData?.userSession
-    guard let id = deleteResponse?.session.id else{
+    guard let _ = deleteResponse?.session.id else{
         sendError(Constants.Errors.userSessionStatus, "parseDeleteSession", completion: completion)
         return
     }
     
-    let authData = ["id": id]
-    completion(authData, nil)
+    completion([deleteResponse], nil)
 }

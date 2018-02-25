@@ -19,7 +19,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
     override func viewDidLoad() {
         super.viewDidLoad()
         addBarButtons(vc: self)
-        //fetchData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -31,7 +30,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
     }
 
     @objc func pin(){
-        if let objectId_ = updatePosition(studentArray: students) {
+        
+        if let objectId_ = updatePosition(studentArray: SharedData.shared.studentsInformations as? [StudentInformation]) {
             // display the alert
             objectId = objectId_
             displayUpdateOptions(optionTitle: "Do you vant to update your position?", action: updateLocation, presenting:{alert in
@@ -45,8 +45,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
         sessionLogout(completion: validateSessionLogout, sender: self)
     }
     
-    func validateSessionLogout(data: [String:Any]){
-        if let _ = data["id"] as? String {
+    func validateSessionLogout(data: Codable?){
+        if let _ = (data as? DeleteResponse)?.session {
             appDelegate.userLoginData = nil
             DispatchQueue.main.async {
                 self.tabBarController?.dismiss(animated: true, completion: nil)
@@ -58,12 +58,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
         }
     }
     
-    func addAnnotationsToMap(locations: [[String:Any]]){
-        students = locations
+    func addAnnotationsToMap(locations: [StudentInformation?]){
+        SharedData.shared.studentsInformations = locations
         var annotations = [MKPointAnnotation]()
         for dictionary in locations {
             let annotation = MKPointAnnotation()
-            guard let lat = dictionary["latitude"] as? Double, let long = dictionary["longitude"] as? Double  else {
+            guard let lat = dictionary?.latitude, let long = dictionary?.longitude  else {
                 continue
             }
             let latitude = CLLocationDegrees(lat)
@@ -71,11 +71,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
             let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             annotation.coordinate = coordinate
             
-            if let first = dictionary["firstName"] as? String, let last  = dictionary["lastName"] as? String {
+            if let first = dictionary?.firstName, let last  = dictionary?.lastName {
                 annotation.title = "\(first) \(last)"
             }
             
-            if let mediaURL = dictionary["mediaURL"] as? String {
+            if let mediaURL = dictionary?.mediaURL{
                 annotation.subtitle = mediaURL
             }
             annotations.append(annotation)

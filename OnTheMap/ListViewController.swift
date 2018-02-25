@@ -10,7 +10,6 @@ import UIKit
 
 class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDelegate, UITableViewDataSource
 {
-    var students: [[String:Any]] = []
     let app = UIApplication.shared
     @IBOutlet weak var tableView: UITableView!
     var objectId: String?
@@ -26,7 +25,7 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
     }
     
     @objc func pin(){
-        if let objectId = updatePosition(studentArray: students) {
+        if let objectId = updatePosition(studentArray: SharedData.shared.studentsInformations as? [StudentInformation]) {
             // display the alert
             self.objectId = objectId
             displayUpdateOptions(optionTitle: "Do you vant to update your position?", action: updateLocation, presenting:{alert in
@@ -41,8 +40,8 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
         sessionLogout(completion: validateSessionLogout, sender: self)
     }
     
-    func validateSessionLogout(data: [String:Any]){
-        if let _ = data["id"] as? String {
+    func validateSessionLogout(data: Codable?){
+        if let _ = (data as? DeleteResponse)?.session {
             appDelegate.userLoginData = nil
             DispatchQueue.main.async {
                 self.tabBarController?.dismiss(animated: true, completion: nil)
@@ -54,9 +53,9 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
         }
     }
     
-    func reloadTable(data: [[String:Any]]){
-        students = data
+    func reloadTable(data: [StudentInformation?]){
         DispatchQueue.main.async{
+            SharedData.shared.studentsInformations = data
             self.tableView.reloadData()
         }
     }
@@ -71,7 +70,7 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
     }
     
     func fetchData(){
-        students.removeAll()
+        SharedData.shared.studentsInformations.removeAll()
         fetchStudentsLocation(completion: reloadTable, sender: self)
     }
     
@@ -82,24 +81,24 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
 
 extension ListViewController {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return students.count
+        return SharedData.shared.studentsInformations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
-        if let firstName = students[indexPath.row]["firstName"], let lastName = students[indexPath.row]["lastName"] {
+        if let firstName = SharedData.shared.studentsInformations[indexPath.row]?.firstName, let lastName = SharedData.shared.studentsInformations[indexPath.row]?.lastName {
             cell.textLabel?.text = "\(firstName) \(lastName)"
         }else {
             cell.textLabel?.text = "Unknown"
         }
-        cell.detailTextLabel?.text = students[indexPath.row]["mediaURL"] as? String
+        cell.detailTextLabel?.text = SharedData.shared.studentsInformations[indexPath.row]?.mediaURL
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if let mediaUrl = students[indexPath.row]["mediaURL"] as? String, let url = URL(string: mediaUrl) {
+        if let mediaUrl = SharedData.shared.studentsInformations[indexPath.row]?.mediaURL, let url = URL(string: mediaUrl) {
             app.open(url, options: [:], completionHandler: nil)
         }
     }

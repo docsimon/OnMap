@@ -10,5 +10,5 @@ import Foundation
 
 class SharedData: NSObject {
     static let shared = SharedData()
-    var studentsInformations = [StudentInformation]()
+    var studentsInformations = [StudentInformation?]()
 }

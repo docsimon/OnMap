@@ -80,7 +80,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 })
                 return
             }
-            if let key = data["key"] as? String, let session = data["sessionId"] as? String {
+            
+            if let key = (data[0] as? LoginResponse)?.account.key, let session = (data[0] as? LoginResponse)?.session.id {
                 DispatchQueue.main.async {
                     appDelegate.userLoginData = UserLoginData(userKey:key, userSession: session)
                     self.performSegue(withIdentifier: "Map", sender: nil)

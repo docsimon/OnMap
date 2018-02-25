@@ -16,7 +16,7 @@ import Foundation
 
 // This function create a connection with the remote server and fetch the data that are passed to a function, which, in turn, is passed as parameter of the function itself.
 
-func makeConnection(request: URLRequest,securityCheck: Bool, jsonHandler: @escaping JsonHandlerFunction, completion: @escaping (_ jsonData: [String:Any]?, _ error: Error?) -> Void ) {
+func makeConnection(request: URLRequest,securityCheck: Bool, jsonHandler: @escaping JsonHandlerFunction, completion: @escaping (_ jsonData: [Codable?]?, _ error: Error?) -> Void ) {
     
     let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
         
