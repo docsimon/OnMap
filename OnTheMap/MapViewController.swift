@@ -37,6 +37,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
             displayUpdateOptions(optionTitle: "Do you vant to update your position?", action: updateLocation, presenting:{alert in
                 self.present(alert, animated: true)
             })
+        }else {
+            updateLocation()
         }
     }
     @objc func logout(){
@@ -46,8 +48,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
     func validateSessionLogout(data: [String:Any]){
         if let _ = data["id"] as? String {
             appDelegate.userLoginData = nil
-            if let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
-                present(loginVC, animated: true)
+            DispatchQueue.main.async {
+                self.tabBarController?.dismiss(animated: true, completion: nil)
             }
         }else{
             displayError(errorTitle: Constants.Errors.userSessionStatus, errorMsg: Constants.Errors.userSessionStatus, presenting: { alert in
@@ -78,7 +80,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, SetupNavBarButtons
             }
             annotations.append(annotation)
         }
-        self.mapView.addAnnotations(annotations)
+        DispatchQueue.main.async {
+            self.mapView.addAnnotations(annotations)
+        }
     }
     
     private func setMapCenter(_ coordinates: CLLocationCoordinate2D){

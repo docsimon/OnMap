@@ -38,7 +38,10 @@ func updatePosition(studentArray: [[String:Any]]) -> String?{
 func fetchStudentsLocation(completion: @escaping OptionalCompletion, sender: UIViewController) {
     
     // build and check the url
-    let url = buildUrl(baseUrl: Constants.parseBaseUrl, path: Constants.parsePath, query: nil)
+    
+     let query = ["limit":"100", "order":"-updatedAt"]
+    
+    let url = buildUrl(baseUrl: Constants.parseBaseUrl, path: Constants.parsePath, query: query)
     guard let murl = url else {
         print(Constants.Errors.urlTitle)
         displayError(errorTitle: Constants.Errors.urlTitle, errorMsg: Constants.Errors.urlMsg, presenting: {alert in
@@ -80,11 +83,11 @@ func fetchStudentsLocation(completion: @escaping OptionalCompletion, sender: UIV
     })
 }
 
-func orderStudentArray(studentArray: [[String : Any]]) -> [[String : Any]]{
-    
-    let orderedArray = studentArray.sorted(by: { $0["updatedAt"] as! String > $1["updatedAt"] as! String })
-    return orderedArray
-}
+//func orderStudentArray(studentArray: [[String : Any]]) -> [[String : Any]]{
+//    
+//    let orderedArray = studentArray.sorted(by: { $0["updatedAt"] as! String > $1["updatedAt"] as! String })
+//    return orderedArray
+//}
 
 func sessionLogout(completion: @escaping ([String:Any]) -> (), sender: UIViewController){
     // build and check the url

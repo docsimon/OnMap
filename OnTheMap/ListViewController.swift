@@ -32,6 +32,8 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
             displayUpdateOptions(optionTitle: "Do you vant to update your position?", action: updateLocation, presenting:{alert in
                 self.present(alert, animated: true)
             })
+        }else{
+            updateLocation()
         }
     }
     
@@ -42,8 +44,8 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
     func validateSessionLogout(data: [String:Any]){
         if let _ = data["id"] as? String {
             appDelegate.userLoginData = nil
-            if let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
-                present(loginVC, animated: true)
+            DispatchQueue.main.async {
+                self.tabBarController?.dismiss(animated: true, completion: nil)
             }
         }else{
             displayError(errorTitle: Constants.Errors.userSessionStatus, errorMsg: Constants.Errors.userSessionStatus, presenting: { alert in
@@ -53,7 +55,7 @@ class ListViewController: UIViewController, SetupNavBarButtons, UITableViewDeleg
     }
     
     func reloadTable(data: [[String:Any]]){
-        students = orderStudentArray(studentArray: data)
+        students = data
         DispatchQueue.main.async{
             self.tableView.reloadData()
         }
