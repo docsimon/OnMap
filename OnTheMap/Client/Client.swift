@@ -28,7 +28,7 @@ func makeConnection(request: URLRequest,securityCheck: Bool, jsonHandler: @escap
         // response checking
         if let statusCode = (response as? HTTPURLResponse)?.statusCode{
             guard checkResponseCode(code: statusCode) == true else {
-                sendError("Status code: \(String(describing: statusCode))", "makeConnection", completion: completion)
+                sendError(translateErrorResponseCode(code: statusCode), "makeConnection", completion: completion)
                 return
             }
         }else {
@@ -61,4 +61,31 @@ func makeConnection(request: URLRequest,securityCheck: Bool, jsonHandler: @escap
 func checkResponseCode(code: Int) -> Bool {
     let successCode = [200, 201, 202, 203, 204]
     return successCode.contains(code)
+}
+
+func translateErrorResponseCode (code: Int) -> String {
+    switch code {
+    // 4xx Client errors
+    case 400:
+        return "Code 400: Bad Request"
+    case 401:
+        return "Code 401: Unauthorized"
+    case 403:
+        return "Code 403: Forbidden"
+    case 404:
+        return "Code 404: Not Found"
+    case 408:
+        return "Code 408: Request Timeout"
+   // 4xx Server errors
+    case 500:
+        return "Code 500: Internal Server Error"
+    case 502:
+        return "Code 502: Bad Gateway"
+    case 503:
+        return "Code 503: Service Unavailable"
+    case 504:
+        return "Code 504: Gateway Timeout"
+    default:
+    return "Generic network error"
+    }
 }
