@@ -138,6 +138,9 @@ class DetailedMapViewController: UIViewController, MKMapViewDelegate, UITextFiel
         let geoDecoder = CLGeocoder()
         geoDecoder.geocodeAddressString(myLocation){ (location, error) in
             guard error == nil, let location = location, location.count > 0 else{
+                displayError(errorTitle: Constants.Errors.errorPostingStudentLocation, errorMsg: error?.localizedDescription, presenting: { alert in
+                    self.present(alert, animated: true)
+                })
                 return
             }
             
