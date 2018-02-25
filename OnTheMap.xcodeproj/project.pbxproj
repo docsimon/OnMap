@@ -21,6 +21,7 @@
 		CA8FEC9620261E2B008C8749 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8FEC9520261E2B008C8749 /* HelperFunctions.swift */; };
 		CA8FEC9820262235008C8749 /* NewLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8FEC9720262235008C8749 /* NewLocationViewController.swift */; };
 		CA8FEC9A20262F67008C8749 /* DetailedMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8FEC9920262F67008C8749 /* DetailedMapViewController.swift */; };
+		CAB6FB5B2043053F00DE9903 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB6FB5A2043053F00DE9903 /* SharedData.swift */; };
 		CABF2A06201C92AF00E3F358 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABF2A05201C92AF00E3F358 /* Alerts.swift */; };
 		CABF2A08201C9DCF00E3F358 /* DataParsingStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABF2A07201C9DCF00E3F358 /* DataParsingStructs.swift */; };
 		CABF2A0A201CEDB000E3F358 /* UserLoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABF2A09201CEDB000E3F358 /* UserLoginData.swift */; };
@@ -44,6 +45,7 @@
 		CA8FEC9520261E2B008C8749 /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		CA8FEC9720262235008C8749 /* NewLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLocationViewController.swift; sourceTree = "<group>"; };
 		CA8FEC9920262F67008C8749 /* DetailedMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedMapViewController.swift; sourceTree = "<group>"; };
+		CAB6FB5A2043053F00DE9903 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		CABF2A05201C92AF00E3F358 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		CABF2A07201C9DCF00E3F358 /* DataParsingStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParsingStructs.swift; sourceTree = "<group>"; };
 		CABF2A09201CEDB000E3F358 /* UserLoginData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginData.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				CABF2A05201C92AF00E3F358 /* Alerts.swift */,
 				CABF2A09201CEDB000E3F358 /* UserLoginData.swift */,
 				CA8FEC932025EE6C008C8749 /* Protocols.swift */,
+				CAB6FB5A2043053F00DE9903 /* SharedData.swift */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 				CA8929F92014F5940065D23F /* ClientHelper.swift in Sources */,
 				CA8929F72014D54F0065D23F /* DataParsing.swift in Sources */,
 				CA8929F52014D3790065D23F /* Client.swift in Sources */,
+				CAB6FB5B2043053F00DE9903 /* SharedData.swift in Sources */,
 				CA8929FB201507BF0065D23F /* Constants.swift in Sources */,
 				CABF2A06201C92AF00E3F358 /* Alerts.swift in Sources */,
 				CA8FEC9A20262F67008C8749 /* DetailedMapViewController.swift in Sources */,
